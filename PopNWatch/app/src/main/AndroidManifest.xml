@@ -11,7 +11,7 @@
         android:theme="@style/Theme.PopNWatch">
         <activity
             android:name=".AdminActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".AdminLoginActivity"
             android:exported="true">
