@@ -37,13 +37,13 @@ public class AddSnackActivity extends AppCompatActivity {
         add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AdminDB adminDB = new AdminDB(AddSnackActivity.this );
+                SnackDB snackDB = new SnackDB(AddSnackActivity.this );
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.snacktest);
                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
                 byte[] img = byteArray.toByteArray();
 
-                adminDB.addSnack(name.getText().toString().trim(), img,
+                snackDB.addSnack(name.getText().toString().trim(), img,
                         Double.parseDouble(price.getText().toString().trim()), genre.getText().toString().trim());
                 Toast.makeText(AddSnackActivity.this, "Snack Added Successfully ", Toast.LENGTH_SHORT).show();
             }

@@ -1,9 +1,11 @@
 package com.example.popnwatch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +13,16 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 public class AdminActivity extends AppCompatActivity {
+
+    AdminRecyclerViewAdapter adminRecyclerViewAdapter;
+
+    ArrayList<String> names = new ArrayList<>();
+    ArrayList<byte[]> imgs = new ArrayList<>();
+    ArrayList<String> price = new ArrayList<>();
+    ArrayList<String> genre = new ArrayList<>();
 
     SnackDB snackDB;
     FloatingActionButton mainFab, movieFab, snackFab, recipeFab;
@@ -68,6 +79,10 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 currentSelect = "Snack";
+                adminRecyclerViewAdapter  = new
+                        AdminRecyclerViewAdapter (names, imgs, price, genre, AdminActivity.this, currentSelect);
+                recyclerView.setAdapter(adminRecyclerViewAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
                 Toast.makeText(AdminActivity.this, "Good " + currentSelect, Toast.LENGTH_SHORT).show();
             }
         } );
@@ -106,5 +121,20 @@ public class AdminActivity extends AppCompatActivity {
                }
             }
         } );
+    }
+
+    public void getSnacks(){
+        Cursor cursor = snackDB.retrieveData();
+
+        if(cursor.getCount() == 0){
+            Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
+        }else{
+            while(cursor.moveToNext()){
+                names.add(cursor.getString( 1 ));
+                imgs.add(cursor.getBlob(2));
+                price.add(cursor.getString(3));
+                genre.add(cursor.getString(4));
+            }
+        }
     }
 }

@@ -33,19 +33,18 @@ public class AdminLoginActivity extends AppCompatActivity {
         admin = findViewById(R.id.adminButton);
 
         adminDB = new AdminDB(this );
-//        snack = new SnackDB( this );
+
 
         login.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-//                if(verifyCredentials() == true){
-                    adminDB.addAdmin( "admin@hotmail.com", "admin" );
+                if(verifyCredentials() == true){
                     Toast.makeText(AdminLoginActivity.this, "Log in sucessful",Toast.LENGTH_SHORT ).show();
                     Intent i = new Intent(AdminLoginActivity.this, AdminActivity.class);
                     startActivity(i);
-//                }else
-//                    Toast.makeText(AdminLoginActivity.this, "Invalid Credentials",Toast.LENGTH_SHORT ).show();
+                }else
+                    Toast.makeText(AdminLoginActivity.this, "Invalid Credentials",Toast.LENGTH_SHORT ).show();
 
 
 
