@@ -4,7 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Alago/AndroidStudioProjects/PopNWatch/app/src/main/res/drawable/background.xml" value="0.15185185185185185" />
-        <entry key="..\:/Users/Alago/AndroidStudioProjects/PopNWatch/app/src/main/res/layout/activity_admin.xml" value="0.25" />
+        <entry key="..\:/Users/Alago/AndroidStudioProjects/PopNWatch/app/src/main/res/layout/activity_add_snack.xml" value="0.33611111111111114" />
+        <entry key="..\:/Users/Alago/AndroidStudioProjects/PopNWatch/app/src/main/res/layout/activity_admin.xml" value="0.5" />
         <entry key="..\:/Users/Alago/AndroidStudioProjects/PopNWatch/app/src/main/res/layout/activity_admin_home.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Alago/AndroidStudioProjects/PopNWatch/app/src/main/res/layout/activity_admin_movie.xml" value="0.25" />
         <entry key="..\:/Users/Alago/AndroidStudioProjects/PopNWatch/app/src/main/res/layout/activity_login.xml" value="0.25" />
