@@ -1,9 +1,11 @@
 package com.example.popnwatch;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 
 public class AdminActivity extends AppCompatActivity {
 
-    AdminRecyclerViewAdapter adminRecyclerViewAdapter;
+    AdminSnackRecylerViewAdapter snackAdapter;
 
     ArrayList<String> names = new ArrayList<>();
     ArrayList<byte[]> imgs = new ArrayList<>();
@@ -32,6 +34,14 @@ public class AdminActivity extends AppCompatActivity {
 
     //Which db to manipulate
     String currentSelect;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult( requestCode, resultCode, data );
+        if(requestCode == 1){
+            recreate();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +89,15 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 currentSelect = "Snack";
-                adminRecyclerViewAdapter  = new
-                        AdminRecyclerViewAdapter (names, imgs, price, genre, AdminActivity.this, currentSelect);
-                recyclerView.setAdapter(adminRecyclerViewAdapter);
+                snackAdapter = new AdminSnackRecylerViewAdapter(names, price, genre, AdminActivity.this);
+                recyclerView.setAdapter(snackAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
+                getSnacks();
+
+//                Activity activity = AdminActivity.this;
+//                Intent i = new Intent(AdminActivity.this, AdminActivity.class);
+//                activity.startActivityForResult(i, 1 );
+
                 Toast.makeText(AdminActivity.this, "Good " + currentSelect, Toast.LENGTH_SHORT).show();
             }
         } );
@@ -108,11 +123,16 @@ public class AdminActivity extends AppCompatActivity {
                        Toast.makeText(AdminActivity.this, "Shit working " + currentSelect, Toast.LENGTH_SHORT).show();
                         break;
                    case "Snack":
+
                        Intent i = new Intent(AdminActivity.this, AddSnackActivity.class);
                        startActivity(i);
                        Toast.makeText(AdminActivity.this, "Shit working " + currentSelect, Toast.LENGTH_SHORT).show();
                         break;
                    case "Recipe":
+                       Intent r = new Intent(AdminActivity.this, AddRecipeActivity.class);
+                       startActivity(r);
+                       Toast.makeText(AdminActivity.this, "Shit working " + currentSelect, Toast.LENGTH_SHORT).show();
+
                        Toast.makeText(AdminActivity.this, "Shit is working" + currentSelect, Toast.LENGTH_SHORT).show();
                        break;
                    default:
@@ -121,9 +141,16 @@ public class AdminActivity extends AppCompatActivity {
                }
             }
         } );
+
+
     }
 
     public void getSnacks(){
+        names.clear();
+        imgs.clear();
+        price.clear();
+        genre.clear();
+
         Cursor cursor = snackDB.retrieveData();
 
         if(cursor.getCount() == 0){

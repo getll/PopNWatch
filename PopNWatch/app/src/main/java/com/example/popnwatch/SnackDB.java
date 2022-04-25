@@ -58,9 +58,9 @@ public class SnackDB extends SQLiteOpenHelper {
 
 
 
-    public void deleteData(String id){
+    public void deleteData(String name){
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(Snacks, "id=?", new String[] {id});
+        long result = db.delete(Snacks, "name=?", new String[] {name});
         if(result == -1){
             Toast.makeText(context, "Failed",Toast.LENGTH_SHORT).show();
         }else{

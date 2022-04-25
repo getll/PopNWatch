@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".AddRecipeActivity">
+
+    <TextView
+        android:id="@+id/etaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Genre"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/etaEditTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/genreRecipeEditTextView"
+        android:layout_width="283dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="20dp"
+        android:background="#99FFFF7F"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etaEditTextView" />
+
+    <TextView
+        android:id="@+id/genreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Genre"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/genreRecipeEditTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/descriptionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionEditTextview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/addSnackButton"
+        android:layout_width="141dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#FFFF7F"
+        android:text="Add Snack"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genreRecipeEditTextView" />
+
+    <EditText
+        android:id="@+id/descriptionEditTextview"
+        android:layout_width="290dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="28dp"
+        android:background="#99FFFF7F"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:textSize="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameRecipeEditTextView" />
+
+    <EditText
+        android:id="@+id/etaEditTextView"
+        android:layout_width="283dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="24dp"
+        android:background="#99FFFF7F"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEditTextview" />
+
+    <EditText
+        android:id="@+id/nameRecipeEditTextView"
+        android:layout_width="283dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="40dp"
+        android:background="#99FFFF7F"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uploadSnackButton" />
+
+    <ImageView
+        android:id="@+id/snackImageView"
+        android:layout_width="115dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <Button
+        android:id="@+id/uploadSnackButton"
+        android:layout_width="82dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#FFFF7F"
+        android:text="Upload Image"
+        android:textSize="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/snackImageView" />
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Name"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/nameRecipeEditTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

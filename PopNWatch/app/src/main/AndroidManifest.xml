@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PopNWatch">
         <activity
+            android:name=".AddRecipeActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddSnackActivity"
             android:exported="false" />
         <activity
