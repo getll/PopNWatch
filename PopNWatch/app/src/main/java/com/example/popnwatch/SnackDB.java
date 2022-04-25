@@ -26,13 +26,14 @@ public class SnackDB extends SQLiteOpenHelper {
 
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
+
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
-        String query = "CREATE TABLE "+Snacks+" ("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ SNACK_NAME + " VARCHAR(25), " + SNACK_IMG + " BLOB," + SNACK_PRICE + " DECIMAL(5,2)," + SNACK_GENRE + " VARCHAR(25));";
-        sqLiteDatabase.execSQL( query );
+//        String query = "CREATE TABLE "+ Snacks +" ("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ SNACK_NAME + " VARCHAR(25), " + SNACK_IMG + " VARCHAR(255)," + SNACK_PRICE + " DECIMAL(5,2)," + SNACK_GENRE + " VARCHAR(25));";
+//        sqLiteDatabase.execSQL( query );
     }
 
     @Override
@@ -70,7 +71,7 @@ public class SnackDB extends SQLiteOpenHelper {
 
     public Cursor retrieveData(){
         String query = "SELECT * FROM " + Snacks;
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
 
         Cursor cursor = null;
         if(db != null){

@@ -27,6 +27,7 @@ public class AdminActivity extends AppCompatActivity {
     ArrayList<String> genre = new ArrayList<>();
 
     SnackDB snackDB;
+    RecipesDb recipesDb;
     FloatingActionButton mainFab, movieFab, snackFab, recipeFab;
     Button add, search;
     RecyclerView recyclerView;
@@ -58,6 +59,7 @@ public class AdminActivity extends AppCompatActivity {
         isVisible = false;
 
         snackDB = new SnackDB( this );
+//        recipesDb = new RecipesDb(this);
 
 
         mainFab.setOnClickListener( new View.OnClickListener() {
@@ -122,12 +124,14 @@ public class AdminActivity extends AppCompatActivity {
                        //Test
                        Toast.makeText(AdminActivity.this, "Shit working " + currentSelect, Toast.LENGTH_SHORT).show();
                         break;
+
                    case "Snack":
 
                        Intent i = new Intent(AdminActivity.this, AddSnackActivity.class);
                        startActivity(i);
                        Toast.makeText(AdminActivity.this, "Shit working " + currentSelect, Toast.LENGTH_SHORT).show();
                         break;
+
                    case "Recipe":
                        Intent r = new Intent(AdminActivity.this, AddRecipeActivity.class);
                        startActivity(r);

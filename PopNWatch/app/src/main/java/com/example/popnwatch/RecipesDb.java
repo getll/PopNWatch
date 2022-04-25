@@ -22,16 +22,19 @@ public class RecipesDb extends SQLiteOpenHelper {
     private static final String RECIPES_ETA="ETA";
     private static final String RECIPES_GENRE="genre";
 
-    public RecipesDb(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super( context, name, factory, version );
+    public RecipesDb(@Nullable Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+        this.context = context;
+
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String query = "CREATE TABLE "+Recipes+" ("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ RECIPES_NAME + " VARCHAR(50), " + RECIPES_IMG + " VARCHAR(255)," + RECIPES_DESC + " VARCHAR(255),"
-                + RECIPES_ETA + " VARCHAR(25)," + RECIPES_GENRE + " VARCHAR(25));";
-
-        sqLiteDatabase.execSQL( query );
+//        String query = "CREATE TABLE "+ Recipes +" ("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ RECIPES_NAME + " VARCHAR(50), " + RECIPES_IMG + " VARCHAR(255)," + RECIPES_DESC + " VARCHAR(255),"
+//                + RECIPES_ETA + " VARCHAR(25)," + RECIPES_GENRE + " VARCHAR(25));";
+//
+//        sqLiteDatabase.execSQL(query);
     }
 
     @Override
