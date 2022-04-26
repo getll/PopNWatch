@@ -2,8 +2,10 @@ package com.example.popnwatch;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -55,5 +57,43 @@ public class RecipesDb extends SQLiteOpenHelper {
         database.insert("Recipes",null,contentValues);
 
         return true;
+    }
+    public void deleteData(String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete( Recipes, "name=?", new String[]{name} );
+        if (result == -1) {
+            Toast.makeText( context, "Failed", Toast.LENGTH_SHORT ).show();
+        } else {
+            Toast.makeText( context, "Record deleted successfully", Toast.LENGTH_SHORT ).show();
+        }
+    }
+
+    public void updateData( String name, String imgUrl, String desc, String eta, String genre){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(RECIPES_NAME, name);
+        cv.put(RECIPES_IMG, imgUrl);
+        cv.put(RECIPES_DESC, desc);
+        cv.put(RECIPES_ETA, eta);
+        cv.put(RECIPES_GENRE, genre);
+
+        long result = sqLiteDatabase.update(Recipes, cv, "name = ? ", new String[] {name});
+
+        if(result == -1){
+            Toast.makeText(context, "Failed",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "Success",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public Cursor retrieveData(){
+        String query = "SELECT * FROM " + Recipes;
+        SQLiteDatabase db = getWritableDatabase();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
     }
 }

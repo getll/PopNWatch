@@ -43,7 +43,7 @@ public class SnackDB extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean addSnack(String name, byte[] img, double price, String genre ) {
+    public boolean addSnack(String name, String img, double price, String genre ) {
 
         SQLiteDatabase database = getWritableDatabase();
         ContentValues contentValues = new ContentValues();

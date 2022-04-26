@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".AddSnackActivity">
-
+    tools:context=".EditSnackActivity"
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/genreTextView"
@@ -31,12 +30,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/addSnackButton"
+        android:id="@+id/updateSnackButton"
         android:layout_width="141dp"
         android:layout_height="41dp"
         android:layout_marginTop="60dp"
         android:backgroundTint="#FFFF7F"
-        android:text="Add Snack"
+        android:text="Update Snack"
         android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,4 +112,5 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/imgUrlEditText"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

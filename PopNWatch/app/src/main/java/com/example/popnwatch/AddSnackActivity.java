@@ -16,8 +16,8 @@ import java.io.ByteArrayOutputStream;
 
 public class AddSnackActivity extends AppCompatActivity {
 
-    EditText name, price, genre;
-    ImageView img;
+    EditText name,imgUrl, price, genre;
+
     Button add, upload;
 
     @Override
@@ -28,9 +28,8 @@ public class AddSnackActivity extends AppCompatActivity {
         name = findViewById( R.id.nameSnackEditTextView);
         price = findViewById( R.id.priceEditTextView);
         genre = findViewById( R.id.genreSnackEditTextView);
-        img = findViewById(R.id.snackImageView );
+        imgUrl  = findViewById( R.id.imgUrlEditText );
         add = findViewById( R.id.addSnackButton );
-        upload = findViewById( R.id.uploadSnackButton );
 
 
 
@@ -38,12 +37,9 @@ public class AddSnackActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 SnackDB snackDB = new SnackDB(AddSnackActivity.this );
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.snacktest);
-                ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
-                byte[] img = byteArray.toByteArray();
 
-                snackDB.addSnack(name.getText().toString().trim(), img,
+
+                snackDB.addSnack(name.getText().toString().trim(), imgUrl.getText().toString().trim(),
                         Double.parseDouble(price.getText().toString().trim()), genre.getText().toString().trim());
                 Toast.makeText(AddSnackActivity.this, "Snack Added Successfully ", Toast.LENGTH_SHORT).show();
             }

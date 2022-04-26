@@ -27,13 +27,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AdminActivity extends AppCompatActivity {
 
     AdminSnackRecylerViewAdapter snackAdapter;
+    AdminRecipeRecyclerViewAdapter recipeAdapter;
     MovieRecyclerAdapter movieRecyclerAdapter;
     SelectedMovieRecyclerViewAdapter selectedMovieRecyclerViewAdapter;
 
     ArrayList<String> names = new ArrayList<>();
-    ArrayList<byte[]> imgs = new ArrayList<>();
+    ArrayList<String> imgs = new ArrayList<>();
     ArrayList<String> price = new ArrayList<>();
     ArrayList<String> genre = new ArrayList<>();
+
+    ArrayList<String> recipeNames = new ArrayList<>();
+    ArrayList<String> recipeImgs = new ArrayList<>();
+    ArrayList<String> recipeDesc = new ArrayList<>();
+    ArrayList<String> recipeEta = new ArrayList<>();
+    ArrayList<String> recipeGenre = new ArrayList<>();
 
     List<NewMovieDataDetail> movieData = new ArrayList<>();
     List<SelectedMovie> selectedMovies = new ArrayList<>();
@@ -78,7 +85,7 @@ public class AdminActivity extends AppCompatActivity {
         recipesDb = new RecipesDb(this);
         movieDb = new MovieDB(this);
 
-        snackAdapter = new AdminSnackRecylerViewAdapter(names, price, genre, AdminActivity.this);
+        snackAdapter = new AdminSnackRecylerViewAdapter(names,imgs, price, genre, AdminActivity.this);
 
 
         mainFab.setOnClickListener( new View.OnClickListener() {
@@ -174,6 +181,10 @@ public class AdminActivity extends AppCompatActivity {
             public void onClick(View view) {
                 currentSelect = "Recipe";
                 changeButtonVisibility();
+                recipeAdapter = new AdminRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre, AdminActivity.this);
+                recyclerView.setAdapter(recipeAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
+                getRecipes();
                 Toast.makeText(AdminActivity.this, "Good " + currentSelect, Toast.LENGTH_SHORT).show();
             }
         } );
@@ -227,7 +238,7 @@ public class AdminActivity extends AppCompatActivity {
         }else{
             while(cursor.moveToNext()){
                 names.add(cursor.getString( 1 ));
-                imgs.add(cursor.getBlob(2));
+                imgs.add(cursor.getString(2));
                 price.add(cursor.getString(3));
                 genre.add(cursor.getString(4));
             }
@@ -244,5 +255,26 @@ public class AdminActivity extends AppCompatActivity {
             add.setClickable(true);
         }
 
+    }
+    public void getRecipes(){
+        recipeNames.clear();
+        recipeImgs.clear();
+        recipeDesc.clear();
+        recipeEta.clear();
+        recipeGenre.clear();
+
+        Cursor cursor = recipesDb.retrieveData();
+
+        if(cursor.getCount() == 0){
+            Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
+        }else{
+            while(cursor.moveToNext()){
+                recipeNames.add(cursor.getString( 1 ));
+                recipeImgs.add(cursor.getString(2));
+                recipeDesc.add(cursor.getString(3));
+                recipeEta.add(cursor.getString(4));
+                recipeGenre.add(cursor.getString( 5));
+            }
+        }
     }
 }
