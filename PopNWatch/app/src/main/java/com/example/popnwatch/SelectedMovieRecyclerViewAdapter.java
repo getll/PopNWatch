@@ -1,12 +1,14 @@
 package com.example.popnwatch;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -88,6 +90,46 @@ public class SelectedMovieRecyclerViewAdapter extends RecyclerView.Adapter<Selec
             contentRatingTextView = itemView.findViewById(R.id.contentRatingTextView);
             deleteMovieButton = itemView.findViewById(R.id.deleteMovieButton);
             editMovieButton = itemView.findViewById(R.id.editMovieButton);
+
+            deleteMovieButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MovieDB movieDB = new MovieDB(context);
+
+                    int position = getAbsoluteAdapterPosition();
+
+                    if (movieDB.removeMovie(selectedMovies.get(position).getId()) > 0) {
+                        selectedMovies.remove(position);
+                        notifyDataSetChanged();
+                        Toast.makeText(context, "Movie deleted", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(context, "Movie could not be deleted", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            editMovieButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    NewMovieDataDetail details = movieData.get(getAbsoluteAdapterPosition());
+                    SelectedMovie selectedMovie = selectedMovies.get(getAbsoluteAdapterPosition());
+
+                    Intent intent = new Intent(context, EditMovieActivity.class);
+
+                    intent.putExtra("title", details.getTitle());
+                    intent.putExtra("apiId", details.getId());
+
+                    intent.putExtra("time", selectedMovie.getTime());
+                    intent.putExtra("id", selectedMovie.getId());
+                    intent.putExtra("screen", selectedMovie.getScreen());
+
+                    context.startActivity(intent);
+
+                    ((AdminActivity) context).getSelectedMovies();
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 }

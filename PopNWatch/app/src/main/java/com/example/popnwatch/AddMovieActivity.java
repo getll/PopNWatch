@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +64,7 @@ public class AddMovieActivity extends AppCompatActivity {
                     Toast.makeText(AddMovieActivity.this, ("movie cannot be added: " + title), Toast.LENGTH_SHORT).show();
                 }
 
-                finishActivity(0);
+                finish();
             }
         });
     }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,6 +89,8 @@ public class AdminActivity extends AppCompatActivity {
         snackAdapter = new AdminSnackRecylerViewAdapter(names,imgs, price, genre, AdminActivity.this);
         recipeAdapter = new AdminRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre, AdminActivity.this);
 
+        getMovieData();
+
         mainFab.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,29 +118,9 @@ public class AdminActivity extends AppCompatActivity {
                 changeButtonVisibility();
                 Toast.makeText(AdminActivity.this, "Good " + currentSelect, Toast.LENGTH_SHORT).show();
 
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(MovieApi.BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                MovieApi api = retrofit.create(MovieApi.class);
-
-                Call<NewMovieData> call = api.getNewMovies();
-                call.enqueue(new Callback<NewMovieData>() {
-                    @Override
-                    public void onResponse(Call<NewMovieData> call, Response<NewMovieData> response) {
-                        movieData = response.body().getItems();
-
-                        movieRecyclerAdapter = new MovieRecyclerAdapter(movieData, AdminActivity.this);
-                        recyclerView.setAdapter(movieRecyclerAdapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
-                        movieRecyclerAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(Call<NewMovieData> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                movieRecyclerAdapter = new MovieRecyclerAdapter(movieData, AdminActivity.this);
+                recyclerView.setAdapter(movieRecyclerAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
             }
         } );
 
@@ -147,27 +130,6 @@ public class AdminActivity extends AppCompatActivity {
                 currentSelect = "SelectedMovie";
                 changeButtonVisibility();
                 Toast.makeText(AdminActivity.this, "weeewie " + currentSelect, Toast.LENGTH_SHORT).show();
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(MovieApi.BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                MovieApi api = retrofit.create(MovieApi.class);
-
-                Call<NewMovieData> call = api.getNewMovies();
-                call.enqueue(new Callback<NewMovieData>() {
-                    @Override
-                    public void onResponse(Call<NewMovieData> call, Response<NewMovieData> response) {
-                        movieData = response.body().getItems();
-
-                        selectedMovieRecyclerViewAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(Call<NewMovieData> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
 
                 selectedMovieRecyclerViewAdapter = new SelectedMovieRecyclerViewAdapter(movieData, selectedMovies, AdminActivity.this);
                 recyclerView.setAdapter(selectedMovieRecyclerViewAdapter);
@@ -242,6 +204,27 @@ public class AdminActivity extends AppCompatActivity {
 
     }
 
+    private void getMovieData() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(MovieApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        MovieApi api = retrofit.create(MovieApi.class);
+
+        Call<NewMovieData> call = api.getNewMovies();
+
+        call.enqueue(new Callback<NewMovieData>() {
+            @Override
+            public void onResponse(Call<NewMovieData> call, Response<NewMovieData> response) {
+                movieData = response.body().getItems();
+            }
+            @Override
+            public void onFailure(Call<NewMovieData> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     public void getSelectedMovies() {
         selectedMovies.clear();
 
@@ -251,7 +234,7 @@ public class AdminActivity extends AppCompatActivity {
             Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
         }
         else {
-            while(cursor.moveToNext()){
+            while (cursor.moveToNext()){
                 String id = cursor.getString(0);
                 String apiId = cursor.getString(1);
                 int screen = cursor.getInt(2);
@@ -315,5 +298,7 @@ public class AdminActivity extends AppCompatActivity {
                 recipeGenre.add(cursor.getString( 5));
             }
         }
+
+        recipeAdapter.notifyDataSetChanged();
     }
 }
