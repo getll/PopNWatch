@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 
 
 public class AdminDB extends SQLiteOpenHelper {
-
     private static final String DB_NAME = "PopNWatch.db";
     private static final int DB_VERSION = 1;
 
@@ -35,8 +34,11 @@ public class AdminDB extends SQLiteOpenHelper {
     private static final String SNACK_PRICE="price";
     private static final String SNACK_GENRE="genre";
 
-
-
+    private static final String Movies = "Movies";
+    private static final String MOVIE_ID ="movie_id";
+    private static final String MOVIE_API_ID = "api_id";
+    private static final String MOVIE_SCREEN = "screen";
+    private static final String MOVIE_TIME = "time";
 
     public AdminDB(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -46,19 +48,32 @@ public class AdminDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String query = "CREATE TABLE "+ADMIN+" ("+ADMIN_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ ADMIN_EMAIL + " VARCHAR(50), " + ADMIN_PASSWORD + " VARCHAR(25));";
         sqLiteDatabase.execSQL(query);
+
         query = "CREATE TABLE "+ Recipes +" ("+RECIPE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ RECIPES_NAME + " VARCHAR(50), " + RECIPES_IMG + " VARCHAR(255)," + RECIPES_DESC + " VARCHAR(255),"
                 + RECIPES_ETA + " VARCHAR(25)," + RECIPES_GENRE + " VARCHAR(25));";
-
         sqLiteDatabase.execSQL(query);
+
         query = "CREATE TABLE "+ Snacks +" ("+SNACK_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ SNACK_NAME + " VARCHAR(25), " + SNACK_IMG + " VARCHAR(255)," + SNACK_PRICE + " DECIMAL(5,2)," + SNACK_GENRE + " VARCHAR(25));";
         sqLiteDatabase.execSQL( query );
 
+        query = "CREATE TABLE "+ Movies +" ("+MOVIE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT," + MOVIE_API_ID + " VARCHAR(255), " + MOVIE_SCREEN + " INTEGER, " + MOVIE_TIME + " VARCHAR(255));";
+        sqLiteDatabase.execSQL( query );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         String query = "Drop table if exists " + ADMIN;
         sqLiteDatabase.execSQL(query);
+
+        query = "Drop table if exists " + Recipes;
+        sqLiteDatabase.execSQL(query);
+
+        query = "Drop table if exists " + Snacks;
+        sqLiteDatabase.execSQL(query);
+
+        query = "Drop table if exists " + Movies;
+        sqLiteDatabase.execSQL(query);
+
         onCreate(sqLiteDatabase);
     }
     public boolean addAdmin(String email, String password ) {
@@ -70,7 +85,6 @@ public class AdminDB extends SQLiteOpenHelper {
         database.insert("Admin",null,contentValues);
 
         return true;
-
     }
 
 

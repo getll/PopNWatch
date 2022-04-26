@@ -50,7 +50,6 @@ public class AdminLoginActivity extends AppCompatActivity {
                 Toast.makeText(AdminLoginActivity.this, "Log in sucessful",Toast.LENGTH_SHORT ).show();
                 Intent i = new Intent(AdminLoginActivity.this, AdminActivity.class);
                 startActivity(i);
-
             }
         } );
     }

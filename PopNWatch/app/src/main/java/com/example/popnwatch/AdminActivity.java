@@ -16,19 +16,33 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AdminActivity extends AppCompatActivity {
 
     AdminSnackRecylerViewAdapter snackAdapter;
+    MovieRecyclerAdapter movieRecyclerAdapter;
+    SelectedMovieRecyclerViewAdapter selectedMovieRecyclerViewAdapter;
 
     ArrayList<String> names = new ArrayList<>();
     ArrayList<byte[]> imgs = new ArrayList<>();
     ArrayList<String> price = new ArrayList<>();
     ArrayList<String> genre = new ArrayList<>();
 
+    List<NewMovieDataDetail> movieData = new ArrayList<>();
+    List<SelectedMovie> selectedMovies = new ArrayList<>();
+
     SnackDB snackDB;
     RecipesDb recipesDb;
-    FloatingActionButton mainFab, movieFab, snackFab, recipeFab;
+    MovieDB movieDb;
+
+    FloatingActionButton mainFab, selectedMovieFab, movieFab, snackFab, recipeFab;
     Button add, search;
     RecyclerView recyclerView;
     boolean isVisible;
@@ -51,26 +65,34 @@ public class AdminActivity extends AppCompatActivity {
 
         recyclerView = findViewById( R.id.recyclerView );
         mainFab = findViewById( R.id.mainFloatingActionButton );
+        selectedMovieFab = findViewById( R.id.selectedMovieFloatingActionButton);
         movieFab = findViewById( R.id.movieFloatingActionButton );
         snackFab = findViewById( R.id.snackFloatingActionButton );
         recipeFab = findViewById( R.id.recipFloatingActionButton );
+
         add = findViewById( R.id.addButton );
         search = findViewById( R.id.searchButton );
         isVisible = false;
 
         snackDB = new SnackDB( this );
-//        recipesDb = new RecipesDb(this);
+        recipesDb = new RecipesDb(this);
+        movieDb = new MovieDB(this);
+
+        snackAdapter = new AdminSnackRecylerViewAdapter(names, price, genre, AdminActivity.this);
 
 
         mainFab.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!isVisible){
+                    selectedMovieFab.show();
                     movieFab.show();
                     snackFab.show();
                     recipeFab.show();
                     isVisible = true;
-                }else{
+                }
+                else {
+                    selectedMovieFab.hide();
                     movieFab.hide();
                     snackFab.hide();
                     recipeFab.hide();
@@ -79,19 +101,62 @@ public class AdminActivity extends AppCompatActivity {
             }
         } );
 
-        movieFab.setOnClickListener( new View.OnClickListener() {
+        movieFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currentSelect = "Movie";
+                changeButtonVisibility();
                 Toast.makeText(AdminActivity.this, "Good " + currentSelect, Toast.LENGTH_SHORT).show();
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(MovieApi.BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                MovieApi api = retrofit.create(MovieApi.class);
+
+                Call<NewMovieData> call = api.getNewMovies();
+                call.enqueue(new Callback<NewMovieData>() {
+                    @Override
+                    public void onResponse(Call<NewMovieData> call, Response<NewMovieData> response) {
+                        movieData = response.body().getItems();
+
+                        System.out.println(response.body());
+                        System.out.println(movieData);
+
+                        movieRecyclerAdapter = new MovieRecyclerAdapter(movieData, AdminActivity.this);
+                        recyclerView.setAdapter(movieRecyclerAdapter);
+                        movieRecyclerAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<NewMovieData> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         } );
+
+        selectedMovieFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentSelect = "SelectedMovie";
+                changeButtonVisibility();
+                Toast.makeText(AdminActivity.this, "weeewie " + currentSelect, Toast.LENGTH_SHORT).show();
+
+
+
+
+
+            }
+        });
 
         snackFab.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currentSelect = "Snack";
-                snackAdapter = new AdminSnackRecylerViewAdapter(names, price, genre, AdminActivity.this);
+                changeButtonVisibility();
                 recyclerView.setAdapter(snackAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
                 getSnacks();
@@ -108,6 +173,7 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 currentSelect = "Recipe";
+                changeButtonVisibility();
                 Toast.makeText(AdminActivity.this, "Good " + currentSelect, Toast.LENGTH_SHORT).show();
             }
         } );
@@ -123,14 +189,13 @@ public class AdminActivity extends AppCompatActivity {
                    case "Movie":
                        //Test
                        Toast.makeText(AdminActivity.this, "Shit working " + currentSelect, Toast.LENGTH_SHORT).show();
-                        break;
+                       break;
 
                    case "Snack":
-
                        Intent i = new Intent(AdminActivity.this, AddSnackActivity.class);
                        startActivity(i);
                        Toast.makeText(AdminActivity.this, "Shit working " + currentSelect, Toast.LENGTH_SHORT).show();
-                        break;
+                       break;
 
                    case "Recipe":
                        Intent r = new Intent(AdminActivity.this, AddRecipeActivity.class);
@@ -167,5 +232,17 @@ public class AdminActivity extends AppCompatActivity {
                 genre.add(cursor.getString(4));
             }
         }
+
+        snackAdapter.notifyDataSetChanged();
+    }
+
+    public void changeButtonVisibility() {
+        if (currentSelect.equals("Movie") || currentSelect.equals("SelectedMovie")) {
+            add.setClickable(false);
+        }
+        else {
+            add.setClickable(true);
+        }
+
     }
 }
