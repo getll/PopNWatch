@@ -120,4 +120,21 @@ public class NewMovieDataDetail {
     public void setStars(String stars) {
         this.stars = stars;
     }
+
+    @Override
+    public String toString() {
+        return "NewMovieDataDetail{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", year='" + year + '\'' +
+                ", image='" + image + '\'' +
+                ", runtimeMins='" + runtimeMins + '\'' +
+                ", plot='" + plot + '\'' +
+                ", contentRating='" + contentRating + '\'' +
+                ", imDbRating='" + imDbRating + '\'' +
+                ", genres='" + genres + '\'' +
+                ", directors='" + directors + '\'' +
+                ", stars='" + stars + '\'' +
+                '}';
+    }
 }

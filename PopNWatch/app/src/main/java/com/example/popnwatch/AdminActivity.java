@@ -86,7 +86,7 @@ public class AdminActivity extends AppCompatActivity {
         movieDb = new MovieDB(this);
 
         snackAdapter = new AdminSnackRecylerViewAdapter(names,imgs, price, genre, AdminActivity.this);
-
+        recipeAdapter = new AdminRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre, AdminActivity.this);
 
         mainFab.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -115,8 +115,6 @@ public class AdminActivity extends AppCompatActivity {
                 changeButtonVisibility();
                 Toast.makeText(AdminActivity.this, "Good " + currentSelect, Toast.LENGTH_SHORT).show();
 
-                recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
-
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(MovieApi.BASE_URL)
                         .addConverterFactory(GsonConverterFactory.create())
@@ -129,11 +127,9 @@ public class AdminActivity extends AppCompatActivity {
                     public void onResponse(Call<NewMovieData> call, Response<NewMovieData> response) {
                         movieData = response.body().getItems();
 
-                        System.out.println(response.body());
-                        System.out.println(movieData);
-
                         movieRecyclerAdapter = new MovieRecyclerAdapter(movieData, AdminActivity.this);
                         recyclerView.setAdapter(movieRecyclerAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
                         movieRecyclerAdapter.notifyDataSetChanged();
                     }
 
@@ -152,10 +148,32 @@ public class AdminActivity extends AppCompatActivity {
                 changeButtonVisibility();
                 Toast.makeText(AdminActivity.this, "weeewie " + currentSelect, Toast.LENGTH_SHORT).show();
 
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(MovieApi.BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                MovieApi api = retrofit.create(MovieApi.class);
 
+                Call<NewMovieData> call = api.getNewMovies();
+                call.enqueue(new Callback<NewMovieData>() {
+                    @Override
+                    public void onResponse(Call<NewMovieData> call, Response<NewMovieData> response) {
+                        movieData = response.body().getItems();
 
+                        selectedMovieRecyclerViewAdapter.notifyDataSetChanged();
+                    }
 
+                    @Override
+                    public void onFailure(Call<NewMovieData> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
+                selectedMovieRecyclerViewAdapter = new SelectedMovieRecyclerViewAdapter(movieData, selectedMovies, AdminActivity.this);
+                recyclerView.setAdapter(selectedMovieRecyclerViewAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
+
+                getSelectedMovies();
             }
         });
 
@@ -181,7 +199,6 @@ public class AdminActivity extends AppCompatActivity {
             public void onClick(View view) {
                 currentSelect = "Recipe";
                 changeButtonVisibility();
-                recipeAdapter = new AdminRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre, AdminActivity.this);
                 recyclerView.setAdapter(recipeAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
                 getRecipes();
@@ -223,6 +240,28 @@ public class AdminActivity extends AppCompatActivity {
         } );
 
 
+    }
+
+    public void getSelectedMovies() {
+        selectedMovies.clear();
+
+        Cursor cursor = movieDb.getMovies();
+
+        if(cursor.getCount() == 0){
+            Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            while(cursor.moveToNext()){
+                String id = cursor.getString(0);
+                String apiId = cursor.getString(1);
+                int screen = cursor.getInt(2);
+                String time = cursor.getString(3);
+
+                selectedMovies.add(new SelectedMovie(id, apiId, screen, time));
+            }
+        }
+
+        selectedMovieRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     public void getSnacks(){

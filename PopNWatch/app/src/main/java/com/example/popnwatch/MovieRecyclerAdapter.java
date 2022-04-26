@@ -41,7 +41,6 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         //setting image using url via glide
         Glide.with(context).asBitmap().load(movie.getImage()).into(holder.movieImageView);
 
-        //setting hero information
         holder.movieTitleTextView.setText(movie.getTitle());
         holder.movieRuntimeTextView.setText(movie.getRuntimeMins() + " minutes");
         holder.movieGenreTextView.setText(movie.getGenres());
@@ -74,10 +73,10 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
 
             movieImageView = itemView.findViewById(R.id.movieImageView);
             movieTitleTextView = itemView.findViewById(R.id.movieTitleTextView);
-            movieRuntimeTextView = itemView.findViewById(R.id.movieRuntimeTextView);
-            movieGenreTextView = itemView.findViewById(R.id.movieGenreTextView);
-            movieGenreTextView = itemView.findViewById(R.id.movieGenreTextView);
-            movieRatingTextView = itemView.findViewById(R.id.movieRatingTextView);
+            movieRuntimeTextView = itemView.findViewById(R.id.movieScreenTextView);
+            movieGenreTextView = itemView.findViewById(R.id.movieTimeTextView);
+            movieGenreTextView = itemView.findViewById(R.id.movieTimeTextView);
+            movieRatingTextView = itemView.findViewById(R.id.movieRuntimeTextView);
             contentRatingTextView = itemView.findViewById(R.id.contentRatingTextView);
             addToMovieSelectionButton = itemView.findViewById(R.id.addToMovieSelectionButton);
 

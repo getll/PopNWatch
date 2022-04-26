@@ -17,10 +17,10 @@
         android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priceEditTextView2" />
+        app:layout_constraintTop_toBottomOf="@+id/screenEditText" />
 
     <EditText
-        android:id="@+id/priceEditTextView2"
+        android:id="@+id/screenEditText"
         android:layout_width="283dp"
         android:layout_height="38dp"
         android:layout_marginTop="48dp"
@@ -32,12 +32,12 @@
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <TextView
-        android:id="@+id/theatreText"
+        android:id="@+id/screenTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Theatre"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/priceEditTextView2"
+        app:layout_constraintBottom_toTopOf="@+id/screenEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.168"
         app:layout_constraintStart_toStartOf="parent" />
@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/displayTitleTextView"
         android:layout_width="371dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -86,7 +86,7 @@
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/displayTitleTextView">
 
         <RadioButton
             android:id="@+id/morningRadioButton"
