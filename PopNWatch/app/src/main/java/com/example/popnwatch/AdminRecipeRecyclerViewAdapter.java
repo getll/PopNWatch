@@ -58,6 +58,8 @@ public class AdminRecipeRecyclerViewAdapter extends RecyclerView.Adapter<AdminRe
             public void onClick(View view) {
                 RecipesDb db = new RecipesDb( mContext );
                 db.deleteData( names.get( holder.getAdapterPosition() ) );
+                ((AdminActivity) mContext).getRecipes();
+                notifyDataSetChanged();;
             }
         } );
 
@@ -70,7 +72,7 @@ public class AdminRecipeRecyclerViewAdapter extends RecyclerView.Adapter<AdminRe
                 i.putExtra("desc", String.valueOf(desc.get(holder.getAdapterPosition())));
                 i.putExtra("eta", String.valueOf(eta.get(holder.getAdapterPosition())));
                 i.putExtra("genre", String.valueOf(genre.get(holder.getAdapterPosition())));
-                mContext.startActivity(i);
+                mContext.startActivityForResult(i, 1);
                 Toast.makeText(mContext,"works", Toast.LENGTH_SHORT).show();
             }
         } );

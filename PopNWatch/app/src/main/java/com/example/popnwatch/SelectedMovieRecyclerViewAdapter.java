@@ -100,7 +100,8 @@ public class SelectedMovieRecyclerViewAdapter extends RecyclerView.Adapter<Selec
 
                     if (movieDB.removeMovie(selectedMovies.get(position).getId()) > 0) {
                         selectedMovies.remove(position);
-                        notifyDataSetChanged();
+                        ((AdminActivity) context).getSelectedMovies();
+
                         Toast.makeText(context, "Movie deleted", Toast.LENGTH_SHORT).show();
                     }
                     else {
@@ -112,8 +113,15 @@ public class SelectedMovieRecyclerViewAdapter extends RecyclerView.Adapter<Selec
             editMovieButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    NewMovieDataDetail details = movieData.get(getAbsoluteAdapterPosition());
                     SelectedMovie selectedMovie = selectedMovies.get(getAbsoluteAdapterPosition());
+
+                    NewMovieDataDetail details = new NewMovieDataDetail();
+
+                    for (NewMovieDataDetail newMovieDataDetail : movieData) {
+                        if (newMovieDataDetail.getId().equals(selectedMovie.getApiId())) {
+                            details = newMovieDataDetail;
+                        }
+                    }
 
                     Intent intent = new Intent(context, EditMovieActivity.class);
 

@@ -51,7 +51,7 @@
         android:layout_marginTop="36dp"
         android:background="#99FFFF7F"
         android:ems="10"
-        android:inputType="textEmailAddress"
+        android:inputType="text|textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"

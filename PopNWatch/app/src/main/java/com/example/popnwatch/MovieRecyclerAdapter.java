@@ -44,7 +44,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         holder.movieTitleTextView.setText(movie.getTitle());
         holder.movieRuntimeTextView.setText(movie.getRuntimeMins() + " minutes");
         holder.movieGenreTextView.setText(movie.getGenres());
-        holder.movieRatingTextView.setText(movie.getImDbRating());
+        holder.movieRatingTextView.setText(movie.getPlot());
 
         if (movie.getContentRating().equals("")) {
             holder.contentRatingTextView.setText("No rating");

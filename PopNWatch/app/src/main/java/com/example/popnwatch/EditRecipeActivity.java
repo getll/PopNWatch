@@ -1,5 +1,6 @@
 package com.example.popnwatch;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +8,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditRecipeActivity extends AppCompatActivity {
 
@@ -26,16 +31,29 @@ public class EditRecipeActivity extends AppCompatActivity {
         update = findViewById( R.id.updateRecipeButton );
         getIntentExtra();
 
+        RecipesDb db = new RecipesDb( EditRecipeActivity.this );
+
         update.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RecipesDb db = new RecipesDb( EditRecipeActivity.this );
                 db.updateData(name.getText().toString().trim(), imgUrl.getText().toString().trim(),
                         desc.getText().toString().trim(), eta.getText().toString().trim(), genre.getText().toString().trim() );
                 Toast.makeText( EditRecipeActivity.this, name.getText().toString().trim(), Toast.LENGTH_SHORT ).show();
             }
         } );
 
+        List<String> recipeNames = new ArrayList<>();
+        Cursor cursor = db.retrieveData();
+
+        if(cursor.getCount() == 0){
+            Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
+        }else{
+            while(cursor.moveToNext()){
+                recipeNames.add(cursor.getString( 1 ));
+            }
+        }
+
+        System.out.println(recipeNames);
 
     }
 

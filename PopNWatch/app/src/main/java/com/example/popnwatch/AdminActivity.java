@@ -129,7 +129,7 @@ public class AdminActivity extends AppCompatActivity {
             public void onClick(View view) {
                 currentSelect = "SelectedMovie";
                 changeButtonVisibility();
-                Toast.makeText(AdminActivity.this, "weeewie " + currentSelect, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AdminActivity.this, "weeewie " + currentSelect, Toast.LENGTH_SHORT).show();
 
                 selectedMovieRecyclerViewAdapter = new SelectedMovieRecyclerViewAdapter(movieData, selectedMovies, AdminActivity.this);
                 recyclerView.setAdapter(selectedMovieRecyclerViewAdapter);
@@ -178,21 +178,20 @@ public class AdminActivity extends AppCompatActivity {
                switch(currentSelect){
                    case "Movie":
                        //Test
-                       Toast.makeText(AdminActivity.this, "Shit working " + currentSelect, Toast.LENGTH_SHORT).show();
+                       Toast.makeText(AdminActivity.this, "Selected " + currentSelect, Toast.LENGTH_SHORT).show();
                        break;
 
                    case "Snack":
                        Intent i = new Intent(AdminActivity.this, AddSnackActivity.class);
                        startActivity(i);
-                       Toast.makeText(AdminActivity.this, "Shit working " + currentSelect, Toast.LENGTH_SHORT).show();
+                       Toast.makeText(AdminActivity.this, "Seleccted " + currentSelect, Toast.LENGTH_SHORT).show();
                        break;
 
                    case "Recipe":
                        Intent r = new Intent(AdminActivity.this, AddRecipeActivity.class);
                        startActivity(r);
-                       Toast.makeText(AdminActivity.this, "Shit working " + currentSelect, Toast.LENGTH_SHORT).show();
+                       Toast.makeText(AdminActivity.this, "Selected " + currentSelect, Toast.LENGTH_SHORT).show();
 
-                       Toast.makeText(AdminActivity.this, "Shit is working" + currentSelect, Toast.LENGTH_SHORT).show();
                        break;
                    default:
                        Toast.makeText(AdminActivity.this, "Please select what will be viewed" + currentSelect, Toast.LENGTH_SHORT).show();
@@ -300,5 +299,7 @@ public class AdminActivity extends AppCompatActivity {
         }
 
         recipeAdapter.notifyDataSetChanged();
+
+        recipesDb.updateData("Fish N Chips", "a", "Bussin", "1h30", "Horror");
     }
 }

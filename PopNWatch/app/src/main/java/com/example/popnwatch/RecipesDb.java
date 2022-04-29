@@ -77,13 +77,17 @@ public class RecipesDb extends SQLiteOpenHelper {
         cv.put(RECIPES_ETA, eta);
         cv.put(RECIPES_GENRE, genre);
 
-        long result = sqLiteDatabase.update(Recipes, cv, "name = ? ", new String[] {name});
 
-        if(result == -1){
+        long result = sqLiteDatabase.update(Recipes, cv, "name = ? ", new String[] {name});
+        System.out.println(result);
+        if(result == 0){
             Toast.makeText(context, "Failed",Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(context, "Success",Toast.LENGTH_SHORT).show();
         }
+//
+//        String query = "update Recipes set description='" + desc + "' where name='" + name + "'";
+//        sqLiteDatabase.execSQL(query);
     }
 
     public Cursor retrieveData(){

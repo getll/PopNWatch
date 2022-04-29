@@ -60,6 +60,8 @@ public class AdminSnackRecylerViewAdapter extends RecyclerView.Adapter<AdminSnac
             public void onClick(View view) {
                 SnackDB db = new SnackDB( mContext );
                 db.deleteData( names.get( holder.getAdapterPosition() ) );
+                ((AdminActivity) mContext).getSnacks();
+                notifyDataSetChanged();
             }
         } );
 
