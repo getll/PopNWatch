@@ -41,22 +41,25 @@ public class AdminDB extends SQLiteOpenHelper {
     private static final String MOVIE_TIME = "time";
 
     public AdminDB(@Nullable Context context) {
+
         super(context, DB_NAME, null, DB_VERSION);
+        SQLiteDatabase db = getWritableDatabase();
+        onCreate(db);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String query = "CREATE TABLE "+ADMIN+" ("+ADMIN_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ ADMIN_EMAIL + " VARCHAR(50), " + ADMIN_PASSWORD + " VARCHAR(25));";
+        String query = "CREATE TABLE IF NOT EXISTS "+ADMIN+" ("+ADMIN_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ ADMIN_EMAIL + " VARCHAR(50), " + ADMIN_PASSWORD + " VARCHAR(25));";
         sqLiteDatabase.execSQL(query);
 
-        query = "CREATE TABLE "+ Recipes +" ("+RECIPE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ RECIPES_NAME + " VARCHAR(50), " + RECIPES_IMG + " VARCHAR(255)," + RECIPES_DESC + " VARCHAR(255),"
+        query = "CREATE TABLE IF NOT EXISTS "+ Recipes +" ("+RECIPE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ RECIPES_NAME + " VARCHAR(50), " + RECIPES_IMG + " VARCHAR(255)," + RECIPES_DESC + " VARCHAR(255),"
                 + RECIPES_ETA + " VARCHAR(25)," + RECIPES_GENRE + " VARCHAR(25));";
         sqLiteDatabase.execSQL(query);
 
-        query = "CREATE TABLE "+ Snacks +" ("+SNACK_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ SNACK_NAME + " VARCHAR(25), " + SNACK_IMG + " VARCHAR(255)," + SNACK_PRICE + " DECIMAL(5,2)," + SNACK_GENRE + " VARCHAR(25));";
+        query = "CREATE TABLE IF NOT EXISTS "+ Snacks +" ("+SNACK_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ SNACK_NAME + " VARCHAR(25), " + SNACK_IMG + " VARCHAR(255)," + SNACK_PRICE + " DECIMAL(5,2)," + SNACK_GENRE + " VARCHAR(25));";
         sqLiteDatabase.execSQL( query );
 
-        query = "CREATE TABLE "+ Movies +" ("+MOVIE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT," + MOVIE_API_ID + " VARCHAR(255), " + MOVIE_SCREEN + " INTEGER, " + MOVIE_TIME + " VARCHAR(255));";
+        query = "CREATE TABLE IF NOT EXISTS "+ Movies +" ("+MOVIE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT," + MOVIE_API_ID + " VARCHAR(255), " + MOVIE_SCREEN + " INTEGER, " + MOVIE_TIME + " VARCHAR(255));";
         sqLiteDatabase.execSQL( query );
     }
 

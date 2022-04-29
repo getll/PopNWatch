@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/Logout"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Logout"
+        app:showAsAction="always"/>
+    <item android:id="@+id/selectPage"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Change Page"
+        app:showAsAction="collapseActionView">
+
+        <menu>
+
+            <item android:id="@+id/Movies"
+                android:icon="@drawable/ic_launcher_background"
+                android:title="Movies"
+                app:showAsAction="always"/>
+            <item android:id="@+id/Snacks"
+                android:icon="@drawable/ic_launcher_background"
+                android:title="Snacks"
+                app:showAsAction="always"/>
+            <item android:id="@+id/Recipes"
+                android:icon="@drawable/ic_launcher_background"
+                android:title="Recipes"
+                app:showAsAction="always"/>
+
+            <item android:id="@+id/Cart"
+                android:icon="@drawable/ic_launcher_background"
+                android:title="Cart"
+                app:showAsAction="always"/>
+
+
+        </menu>
+
+    </item>
+
+
+</menu>

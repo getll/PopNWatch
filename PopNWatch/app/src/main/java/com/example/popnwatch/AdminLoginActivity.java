@@ -39,17 +39,17 @@ public class AdminLoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(verifyCredentials() == true){
-                    Toast.makeText(AdminLoginActivity.this, "Log in sucessful",Toast.LENGTH_SHORT ).show();
-                    Intent i = new Intent(AdminLoginActivity.this, AdminActivity.class);
-                    startActivity(i);
-                }else
-                    Toast.makeText(AdminLoginActivity.this, "Invalid Credentials",Toast.LENGTH_SHORT ).show();
+//                if(verifyCredentials() == true){
+//                    Toast.makeText(AdminLoginActivity.this, "Log in sucessful",Toast.LENGTH_SHORT ).show();
+//                    Intent i = new Intent(AdminLoginActivity.this, AdminActivity.class);
+//                    startActivity(i);
+//                }else
+//                    Toast.makeText(AdminLoginActivity.this, "Invalid Credentials",Toast.LENGTH_SHORT ).show();
 
 //                adminDB.addAdmin("admin@hotmail.com", "admin");
-//                Toast.makeText(AdminLoginActivity.this, "Log in sucessful",Toast.LENGTH_SHORT ).show();
-//                Intent i = new Intent(AdminLoginActivity.this, AdminActivity.class);
-//                startActivity(i);
+                Toast.makeText(AdminLoginActivity.this, "Log in sucessful",Toast.LENGTH_SHORT ).show();
+                Intent i = new Intent(AdminLoginActivity.this, ClientActivity.class);
+                startActivity(i);
             }
         } );
     }

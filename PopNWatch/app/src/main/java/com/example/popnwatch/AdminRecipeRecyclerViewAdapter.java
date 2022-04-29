@@ -72,7 +72,7 @@ public class AdminRecipeRecyclerViewAdapter extends RecyclerView.Adapter<AdminRe
                 i.putExtra("desc", String.valueOf(desc.get(holder.getAdapterPosition())));
                 i.putExtra("eta", String.valueOf(eta.get(holder.getAdapterPosition())));
                 i.putExtra("genre", String.valueOf(genre.get(holder.getAdapterPosition())));
-                mContext.startActivityForResult(i, 1);
+                mContext.startActivity(i);
                 Toast.makeText(mContext,"works", Toast.LENGTH_SHORT).show();
             }
         } );

@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PopNWatch">
         <activity
+            android:name=".ClientActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditMovieActivity"
             android:exported="false" />
         <activity
