@@ -19,6 +19,15 @@ public class AdminDB extends SQLiteOpenHelper {
     private static final String ADMIN_EMAIL="email";
     private static final String ADMIN_PASSWORD="password";
 
+    private static final String USER = "User";
+    private static final String USER_ID ="user_id";
+    private static final String USER_FIRSTNAME="firstName";
+    private static final String USER_LASTNAME="lastName";
+    private static final String USER_BIRTHDAY="birthday";
+    private static final String USER_EMAIL="email";
+    private static final String USER_PASSWORD="password";
+
+
     private static final String Recipes = "Recipes";
     private static final String RECIPE_ID ="recipe_id";
     private static final String RECIPES_NAME="name";
@@ -50,6 +59,10 @@ public class AdminDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String query = "CREATE TABLE IF NOT EXISTS "+ADMIN+" ("+ADMIN_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ ADMIN_EMAIL + " VARCHAR(50), " + ADMIN_PASSWORD + " VARCHAR(25));";
+        sqLiteDatabase.execSQL(query);
+
+        query = "CREATE TABLE IF NOT EXISTS "+USER+" ("+USER_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ USER_FIRSTNAME + " VARCHAR(50), " + USER_LASTNAME + " VARCHAR(50), "+ USER_BIRTHDAY + " DATE, "
+                + USER_EMAIL + " VARCHAR(50), " + USER_PASSWORD + " VARCHAR(50));";
         sqLiteDatabase.execSQL(query);
 
         query = "CREATE TABLE IF NOT EXISTS "+ Recipes +" ("+RECIPE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ RECIPES_NAME + " VARCHAR(50), " + RECIPES_IMG + " VARCHAR(255)," + RECIPES_DESC + " VARCHAR(255),"

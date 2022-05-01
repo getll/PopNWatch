@@ -1,6 +1,8 @@
 package com.example.popnwatch;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,17 +54,35 @@ public class ClientSnackRecyclerViewAdapter extends RecyclerView.Adapter<ClientS
                 .into(holder.itemImg);
         holder.title.setText(names.get( position ));
         holder.info.setText(prices.get( position ));
+
+
         holder.add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder( mContext );
+                alertDialog.setView( R.layout.add_to_cart_dialog )
+                        .setTitle( "Select Quantity" )
+                        .setPositiveButton( "Add to cart", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
+                            }
+                        } )
+                        .setNegativeButton( "Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        } );
+                AlertDialog dialog = alertDialog.create();
+                dialog.show();
             }
         } );
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return names.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
