@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -71,11 +72,16 @@ public class ClientActivity extends AppCompatActivity {
                 recyclerView.setAdapter(snackAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(ClientActivity.this));
                 getSnacks();
-                Toast.makeText(this, "Snacks selected" + names.get( 0 ), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Snacks selected" + names.get( 0 ), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.Recipes:
                 Toast.makeText(this, "Recipes is selected", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.Cart:
+                Intent intent = new Intent(ClientActivity.this, CartActivity.class);
+                startActivity(intent);
                 break;
 
             default:

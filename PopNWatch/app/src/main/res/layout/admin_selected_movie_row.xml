@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/movieImageView"
-        app:layout_constraintTop_toBottomOf="@+id/movieScreenTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/movieStarsTextView" />
 
     <TextView
         android:id="@+id/movieRuntimeTextView"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/movieTimeTextView" />
 
     <TextView
-        android:id="@+id/movieScreenTextView"
+        android:id="@+id/movieStarsTextView"
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
@@ -81,7 +81,7 @@
         android:layout_marginEnd="8dp"
         android:text="TextView"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/movieScreenTextView"
+        app:layout_constraintEnd_toStartOf="@+id/movieStarsTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movieImageView" />
 

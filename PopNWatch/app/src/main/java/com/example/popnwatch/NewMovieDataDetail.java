@@ -10,7 +10,7 @@ public class NewMovieDataDetail {
     public String plot;
 
     public String contentRating; //include
-    public String imDbRating; //include
+    public String imDbRating; //include, but it doesnt really show
 
     public String genres; //include
     public String directors;

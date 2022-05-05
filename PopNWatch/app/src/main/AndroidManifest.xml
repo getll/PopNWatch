@@ -13,6 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PopNWatch">
         <activity
+            android:name=".MovieDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TicketsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CheckoutActivity"
+            android:exported="false" />
+        <activity
             android:name=".ClientLoginActivity"
             android:exported="false" />
         <activity

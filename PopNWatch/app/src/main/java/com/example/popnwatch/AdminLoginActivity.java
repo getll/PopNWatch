@@ -32,7 +32,7 @@ public class AdminLoginActivity extends AppCompatActivity {
         signIn = findViewById(R.id.signInButton);
         admin = findViewById(R.id.adminButton);
 
-        adminDB = new AdminDB(this );
+        adminDB = new AdminDB(getApplicationContext());
 
 
         login.setOnClickListener( new View.OnClickListener() {
@@ -48,6 +48,7 @@ public class AdminLoginActivity extends AppCompatActivity {
 
 //                adminDB.addAdmin("admin@hotmail.com", "admin");
                 Toast.makeText(AdminLoginActivity.this, "Log in sucessful",Toast.LENGTH_SHORT ).show();
+//                Intent i = new Intent(AdminLoginActivity.this, AdminActivity.class);
                 Intent i = new Intent(AdminLoginActivity.this, ClientActivity.class);
                 startActivity(i);
             }

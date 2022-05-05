@@ -7,11 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -97,7 +95,7 @@ public class ClientSnackRecyclerViewAdapter extends RecyclerView.Adapter<ClientS
             itemImg = itemView.findViewById( R.id.citemImg );
             title = itemView.findViewById( R.id.clientTitleTextView );
             info = itemView.findViewById( R.id.cinfoTextView );
-            add = itemView.findViewById( R.id.addToCartButton);
+            add = itemView.findViewById( R.id.addToCart);
 
         }
     }

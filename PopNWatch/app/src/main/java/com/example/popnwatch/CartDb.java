@@ -1,0 +1,199 @@
+package com.example.popnwatch;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.Nullable;
+
+public class CartDb extends SQLiteOpenHelper {
+    private static final String DB_NAME = "PopNWatch.db";
+    private static final int DB_VERSION = 1;
+
+    private static final String ADMIN = "Admin";
+    private static final String ADMIN_ID ="admin_id";
+    private static final String ADMIN_EMAIL="email";
+    private static final String ADMIN_PASSWORD="password";
+
+    private static final String USER = "User";
+    private static final String USER_ID ="user_id";
+    private static final String USER_FIRSTNAME="firstName";
+    private static final String USER_LASTNAME="lastName";
+    private static final String USER_BIRTHDAY="birthday";
+    private static final String USER_EMAIL="email";
+    private static final String USER_PASSWORD="password";
+
+    private static final String Recipes = "Recipes";
+    private static final String RECIPE_ID ="recipe_id";
+    private static final String RECIPES_NAME="name";
+    private static final String RECIPES_IMG="img";
+    private static final String RECIPES_DESC="description";
+    private static final String RECIPES_ETA="ETA";
+    private static final String RECIPES_GENRE="genre";
+
+    private static final String Snacks = "Snacks";
+    private static final String SNACK_ID ="snack_id";
+    private static final String SNACK_NAME="name";
+    private static final String SNACK_IMG="img";
+    private static final String SNACK_PRICE="price";
+    private static final String SNACK_GENRE="genre";
+
+    private static final String Movies = "Movies";
+    private static final String MOVIE_ID ="movie_id";
+    private static final String MOVIE_API_ID = "api_id";
+    private static final String MOVIE_SCREEN = "screen";
+    private static final String MOVIE_TIME = "time";
+
+    private static final String Cart = "Cart";
+    private static final String CART_ID = "cart_id";
+    private static final String CART_MOVIE_ID = "movie_id";
+    private static final String CART_QUANTITY = "quantity";
+    private static final String CART_USER_ID = "user_id";
+    private static final String CART_IS_PAID = "is_paid";
+
+    private static final String Snack_Cart = "Snack_Cart";
+    private static final String SNACK_CART_ID = "snack_cart_id";
+    private static final String SNACK_CART_SNACK_ID = "snack_id";
+    private static final String SNACK_CART_QUANTITY = "quantity";
+    private static final String SNACK_CART_CART_ID = "cart_id";
+
+    public CartDb(@Nullable Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+        SQLiteDatabase db = getWritableDatabase();
+        onCreate(db);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        String query = "Drop table if exists " + Snack_Cart;
+        sqLiteDatabase.execSQL(query);
+
+        query = "Drop table if exists " + Cart;
+        sqLiteDatabase.execSQL(query);
+
+        onCreate(sqLiteDatabase);
+    }
+
+//    //Cart operations
+    public Cursor getCart(String userId) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        if (!checkExistingCart(userId)) {
+            //creates empty cart if unpaid cart does not exist
+            ContentValues contentValues = new ContentValues();
+            contentValues.putNull(CART_QUANTITY);
+            contentValues.putNull(CART_MOVIE_ID);
+            contentValues.put(CART_USER_ID, userId); //this from user
+            contentValues.put(CART_IS_PAID, 0); //cart is unpaid
+
+            sqLiteDatabase.insert(Cart, null, contentValues);
+        }
+
+        Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + Cart + " Where " + CART_IS_PAID + " = ? AND " + CART_USER_ID + " = ?", new String[] {"0", userId});
+
+        return cursor;
+    }
+
+    //checking for unpaid cart
+    public boolean checkExistingCart(String userId) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + Cart + " Where " + CART_IS_PAID + " = ? AND " + CART_USER_ID + " = ?", new String[] {"0", userId});
+
+        if (cursor.getCount() == 0)
+            return false;
+        return true;
+    }
+
+    //admin side
+    public Cursor getAllCarts() {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + Cart +
+                " INNER JOIN " + Snack_Cart + " on " + Cart + "." + CART_ID + " = " + Snack_Cart + "." + SNACK_CART_CART_ID, null);
+
+        return cursor;
+    }
+
+    public boolean editCart(String id, String movieId, int quantity, boolean isPaid) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CART_MOVIE_ID, movieId);
+        contentValues.put(CART_QUANTITY, quantity);
+        contentValues.put(CART_IS_PAID, (isPaid) ? 1 : 0);
+
+        long result = sqLiteDatabase.update(Cart, contentValues, CART_ID + " = ? ", new String[] {id});
+
+        if (result == 1)
+            return true;
+
+        return false;
+    }
+
+    public boolean checkoutCart(String id, String movieId, int quantity) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CART_MOVIE_ID, movieId);
+        contentValues.put(CART_QUANTITY, quantity);
+        contentValues.put(CART_IS_PAID, 1);
+
+        long result = sqLiteDatabase.update(Cart, contentValues, CART_ID + " = ? ", new String[] {id});
+
+        if (result == 1)
+            return true;
+
+        return false;
+    }
+
+    //Snack cart operations
+    public Cursor getSnackCart(String cartId) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + Snack_Cart + " WHERE " + CART_ID + " = ?", new String[] {cartId});
+
+        return cursor;
+    }
+
+    public boolean createSnackCart(String snackId, int quantity, String cartId) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SNACK_CART_SNACK_ID, snackId);
+        contentValues.put(SNACK_CART_QUANTITY, quantity);
+        contentValues.put(SNACK_CART_CART_ID, cartId);
+
+        sqLiteDatabase.insert(Snack_Cart, null, contentValues);
+
+        return true;
+    }
+
+    public boolean editSnackCart(String id, String snackId, int quantity, String cartId) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SNACK_CART_SNACK_ID, snackId);
+        contentValues.put(SNACK_CART_QUANTITY, quantity);
+        contentValues.put(SNACK_CART_CART_ID, cartId);
+
+        long result = sqLiteDatabase.update(Snack_Cart, contentValues, SNACK_CART_CART_ID + " = ? ", new String[] {id});
+
+        if (result == 1)
+            return true;
+
+        return false;
+    }
+
+    public int deleteSnackCart(String id) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        return sqLiteDatabase.delete(Snack_Cart, SNACK_CART_CART_ID + " = ? ", new String[] {id});
+    }
+}

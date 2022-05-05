@@ -53,7 +53,7 @@ public class EditMovieActivity extends AppCompatActivity {
             eveningRadioButton.setChecked(true);
         }
 
-        movieDB = new MovieDB(this);
+        movieDB = new MovieDB(getApplicationContext());
 
         editShowingButton.setOnClickListener(new View.OnClickListener() {
             @Override

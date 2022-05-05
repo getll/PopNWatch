@@ -19,14 +19,13 @@ public class AdminDB extends SQLiteOpenHelper {
     private static final String ADMIN_EMAIL="email";
     private static final String ADMIN_PASSWORD="password";
 
-    private static final String USER = "User";
+    private static final String User = "User";
     private static final String USER_ID ="user_id";
     private static final String USER_FIRSTNAME="firstName";
     private static final String USER_LASTNAME="lastName";
     private static final String USER_BIRTHDAY="birthday";
     private static final String USER_EMAIL="email";
     private static final String USER_PASSWORD="password";
-
 
     private static final String Recipes = "Recipes";
     private static final String RECIPE_ID ="recipe_id";
@@ -49,6 +48,19 @@ public class AdminDB extends SQLiteOpenHelper {
     private static final String MOVIE_SCREEN = "screen";
     private static final String MOVIE_TIME = "time";
 
+    private static final String Cart = "Cart";
+    private static final String CART_ID = "cart_id";
+    private static final String CART_MOVIE_ID = "movie_id";
+    private static final String CART_QUANTITY = "quantity";
+    private static final String CART_USER_ID = "user_id";
+    private static final String CART_IS_PAID = "is_paid";
+
+    private static final String Snack_Cart = "Snack_Cart";
+    private static final String SNACK_CART_ID = "snack_cart_id";
+    private static final String SNACK_CART_SNACK_ID = "snack_id";
+    private static final String SNACK_CART_QUANTITY = "quantity";
+    private static final String SNACK_CART_CART_ID = "cart_id";
+
     public AdminDB(@Nullable Context context) {
 
         super(context, DB_NAME, null, DB_VERSION);
@@ -61,7 +73,7 @@ public class AdminDB extends SQLiteOpenHelper {
         String query = "CREATE TABLE IF NOT EXISTS "+ADMIN+" ("+ADMIN_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ ADMIN_EMAIL + " VARCHAR(50), " + ADMIN_PASSWORD + " VARCHAR(25));";
         sqLiteDatabase.execSQL(query);
 
-        query = "CREATE TABLE IF NOT EXISTS "+USER+" ("+USER_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ USER_FIRSTNAME + " VARCHAR(50), " + USER_LASTNAME + " VARCHAR(50), "+ USER_BIRTHDAY + " DATE, "
+        query = "CREATE TABLE IF NOT EXISTS "+ User +" ("+USER_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ USER_FIRSTNAME + " VARCHAR(50), " + USER_LASTNAME + " VARCHAR(50), "+ USER_BIRTHDAY + " DATE, "
                 + USER_EMAIL + " VARCHAR(50), " + USER_PASSWORD + " VARCHAR(50));";
         sqLiteDatabase.execSQL(query);
 
@@ -74,6 +86,38 @@ public class AdminDB extends SQLiteOpenHelper {
 
         query = "CREATE TABLE IF NOT EXISTS "+ Movies +" ("+MOVIE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT," + MOVIE_API_ID + " VARCHAR(255), " + MOVIE_SCREEN + " INTEGER, " + MOVIE_TIME + " VARCHAR(255));";
         sqLiteDatabase.execSQL( query );
+
+        query = "CREATE TABLE IF NOT EXISTS " + User + " (" +
+                USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                USER_FIRSTNAME + " VARCHAR(255), " +
+                USER_LASTNAME + " VARCHAR(255), " +
+                USER_BIRTHDAY + " DATE, " +
+                USER_EMAIL + " VARCHAR(255), " +
+                USER_PASSWORD + " VARCHAR(255) " +
+                ");";
+        sqLiteDatabase.execSQL( query );
+
+        query = "CREATE TABLE IF NOT EXISTS " + Snack_Cart + " (" +
+                SNACK_CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                SNACK_CART_QUANTITY + " INTEGER, " +
+                SNACK_CART_SNACK_ID + " INTEGER, " +
+                SNACK_CART_CART_ID + " INTEGER, " +
+                "FOREIGN KEY(" + SNACK_CART_SNACK_ID + ") REFERENCES " + Snacks + "(" + SNACK_ID + "), " +
+                "FOREIGN KEY(" + SNACK_CART_CART_ID + ") REFERENCES " + Cart + "(" + CART_ID + ")" +
+                ");";
+        sqLiteDatabase.execSQL( query );
+
+        query = "CREATE TABLE IF NOT EXISTS " + Cart + " (" +
+                CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                CART_QUANTITY + " INTEGER, " +
+                CART_IS_PAID + " INTEGER, " + //no boolean in sqlite
+                CART_MOVIE_ID + " INTEGER, " +
+                CART_USER_ID + " INTEGER, " +
+                "FOREIGN KEY(" + CART_MOVIE_ID + ") REFERENCES " + Cart + "(" + CART_ID + "), " +
+                "FOREIGN KEY(" + CART_USER_ID + ") REFERENCES " + User + "(" + USER_ID + ")" +
+                ");";
+        sqLiteDatabase.execSQL( query );
+
     }
 
     @Override
@@ -90,6 +134,15 @@ public class AdminDB extends SQLiteOpenHelper {
         query = "Drop table if exists " + Movies;
         sqLiteDatabase.execSQL(query);
 
+        query = "Drop table if exists " + User;
+        sqLiteDatabase.execSQL(query);
+
+        query = "Drop table if exists " + Snack_Cart;
+        sqLiteDatabase.execSQL(query);
+
+        query = "Drop table if exists " + Cart;
+        sqLiteDatabase.execSQL(query);
+
         onCreate(sqLiteDatabase);
     }
     public boolean addAdmin(String email, String password ) {
@@ -102,8 +155,6 @@ public class AdminDB extends SQLiteOpenHelper {
 
         return true;
     }
-
-
 
     public Cursor retrieveAdmin(){
         String query = "SELECT * FROM " + ADMIN;

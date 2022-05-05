@@ -73,7 +73,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
 
             movieImageView = itemView.findViewById(R.id.movieImageView);
             movieTitleTextView = itemView.findViewById(R.id.movieTitleTextView);
-            movieRuntimeTextView = itemView.findViewById(R.id.movieScreenTextView);
+            movieRuntimeTextView = itemView.findViewById(R.id.movieStarsTextView);
             movieGenreTextView = itemView.findViewById(R.id.movieTimeTextView);
             movieGenreTextView = itemView.findViewById(R.id.movieTimeTextView);
             movieRatingTextView = itemView.findViewById(R.id.movieRuntimeTextView);

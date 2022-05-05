@@ -5,6 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <Button
+        android:id="@+id/movieDetailsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Details"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contentRatingTextView" />
+
     <TextView
         android:id="@+id/movieTitleTextView"
         android:layout_width="0dp"
@@ -30,24 +42,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/movieImageView"
-        app:layout_constraintTop_toBottomOf="@+id/movieStarsTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/movieTitleTextView" />
 
     <TextView
         android:id="@+id/movieRuntimeTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="TextView"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/movieImageView"
-        app:layout_constraintTop_toBottomOf="@+id/movieTimeTextView" />
-
-    <TextView
-        android:id="@+id/movieStarsTextView"
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
@@ -58,10 +56,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/movieImageView"
-        app:layout_constraintTop_toBottomOf="@+id/movieTitleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/movieTimeTextView" />
 
     <ImageView
         android:id="@+id/movieImageView"
+        tools:srcCompat="@tools:sample/avatars"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -70,19 +69,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/movieRuntimeTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/movieTitleTextView"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/addToMovieSelectionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Add to Movies"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contentRatingTextView" />
+         />
 
     <TextView
         android:id="@+id/contentRatingTextView"
@@ -91,10 +78,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textColor="@color/white"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/movieStarsTextView"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/movieTimeTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movieImageView" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -84,7 +84,7 @@ public class SelectedMovieRecyclerViewAdapter extends RecyclerView.Adapter<Selec
 
             movieImageView = itemView.findViewById(R.id.movieImageView);
             movieTitleTextView = itemView.findViewById(R.id.movieTitleTextView);
-            movieScreenTextView = itemView.findViewById(R.id.movieScreenTextView);
+            movieScreenTextView = itemView.findViewById(R.id.movieStarsTextView);
             movieTimeTextView = itemView.findViewById(R.id.movieTimeTextView);
             movieRuntimeTextView = itemView.findViewById(R.id.movieRuntimeTextView);
             contentRatingTextView = itemView.findViewById(R.id.contentRatingTextView);

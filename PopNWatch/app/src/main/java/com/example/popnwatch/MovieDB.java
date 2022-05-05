@@ -71,7 +71,7 @@ public class MovieDB extends SQLiteOpenHelper {
         long result = sqLiteDatabase.update(Movies, contentValues, MOVIE_ID + " = ? ", new String[] {id});
         sqLiteDatabase.close();
 
-        if (result == -1)
+        if (result < 1)
             return false;
         else
             return true;

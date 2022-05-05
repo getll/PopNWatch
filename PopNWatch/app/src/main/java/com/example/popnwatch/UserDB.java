@@ -1,6 +1,7 @@
 package com.example.popnwatch;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -36,7 +37,11 @@ public class UserDB extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void addUser(){
-
-    }
+//    public void addUser() {
+//
+//    }
+//
+//    public Cursor getAllUsers() {
+//
+//    }
 }
