@@ -60,7 +60,6 @@
 
     <ImageView
         android:id="@+id/movieImageView"
-        tools:srcCompat="@tools:sample/avatars"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -69,7 +68,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/movieRuntimeTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/movieTitleTextView"
-         />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/contentRatingTextView"

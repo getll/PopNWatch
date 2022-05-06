@@ -1,6 +1,7 @@
 package com.example.popnwatch;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class ClientMovieRecyclerViewAdapter extends RecyclerView.Adapter<ClientM
     public ClientMovieRecyclerViewAdapter(List<NewMovieDataDetail> movieData, List<SelectedMovie> selectedMovies, Context context) {
         this.movieData = movieData;
         this.selectedMovies = selectedMovies;
+
         this.context = context;
     }
 
@@ -32,7 +34,7 @@ public class ClientMovieRecyclerViewAdapter extends RecyclerView.Adapter<ClientM
     public ClientMovieRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = layoutInflater.from(parent.getContext()).inflate(R.layout.client_movie_row, parent, false);
 
-        return new ClientMovieRecyclerViewAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -82,7 +84,24 @@ public class ClientMovieRecyclerViewAdapter extends RecyclerView.Adapter<ClientM
             movieDetailsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    SelectedMovie movie = selectedMovies.get(getAbsoluteAdapterPosition());
+                    NewMovieDataDetail movieDataDetail = new NewMovieDataDetail();
 
+                    for (NewMovieDataDetail movieDetail : movieData) {
+                        if (movieDetail.getId().equals(movie.getApiId())) {
+                            movieDataDetail = movieDetail;
+                        }
+                    }
+
+                    Intent intent = new Intent(context, MovieDetailsActivity.class);
+
+                    intent.putExtra("title", movieDataDetail.getTitle());
+                    intent.putExtra("img", movieDataDetail.getImage());
+                    intent.putExtra("plot", movieDataDetail.getPlot());
+                    intent.putExtra("time", movie.getTime());
+                    intent.putExtra("runtime", movieDataDetail.getRuntimeMins());
+
+                    context.startActivity(intent);
                 }
             });
         }

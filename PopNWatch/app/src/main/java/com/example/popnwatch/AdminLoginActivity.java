@@ -20,7 +20,6 @@ public class AdminLoginActivity extends AppCompatActivity {
     Button login, register, signIn, admin;
     AdminDB adminDB;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -34,14 +33,19 @@ public class AdminLoginActivity extends AppCompatActivity {
 
         adminDB = new AdminDB(getApplicationContext());
 
+        //clears any currently existing user preferences, only use if want to change every restart
+        //otherwise you can check for one and if there is, just keep going
+
 
         login.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 //                if(verifyCredentials() == true){
+//                    //set the user preferences here for id
 //                    Toast.makeText(AdminLoginActivity.this, "Log in sucessful",Toast.LENGTH_SHORT ).show();
 //                    Intent i = new Intent(AdminLoginActivity.this, AdminActivity.class);
+
 //                    startActivity(i);
 //                }else
 //                    Toast.makeText(AdminLoginActivity.this, "Invalid Credentials",Toast.LENGTH_SHORT ).show();

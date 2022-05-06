@@ -14,6 +14,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClientActivity extends AppCompatActivity {
 
@@ -30,18 +37,28 @@ public class ClientActivity extends AppCompatActivity {
     ArrayList<String> recipeEta = new ArrayList<>();
     ArrayList<String> recipeGenre = new ArrayList<>();
 
+    List<NewMovieDataDetail> movieData = new ArrayList<>();
+    List<SelectedMovie> selectedMovies = new ArrayList<>();
+
     SnackDB snackDB;
     RecipesDb recipesDb;
+    MovieDB movieDb;
 
     ClientSnackRecyclerViewAdapter snackAdapter;
     ClientRecipeRecyclerViewAdapter recipeAdapter;
+    ClientMovieRecyclerViewAdapter clientMovieRecyclerViewAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_client );
+
         recyclerView = findViewById( R.id.recyclerView2);
         snackDB = new SnackDB( this );
         recipesDb = new RecipesDb( this );
+        movieDb = new MovieDB(this);
+
+        getMovieData();
         snackAdapter = new ClientSnackRecyclerViewAdapter(names,imgs, price, genre, ClientActivity.this);
         recipeAdapter = new ClientRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre , this);
 
@@ -59,14 +76,21 @@ public class ClientActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.Logout:
-                    Toast.makeText(this, " Logout is selected", Toast.LENGTH_SHORT).show();
-                    break;
+                //destroy the user preferences, finish activity
+
+                finish();
+                Toast.makeText(this, " Logout is selected", Toast.LENGTH_SHORT).show();
+                break;
 
             case R.id.selectPage:
                 Toast.makeText(this, "Select is selected", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.Movies:
+                clientMovieRecyclerViewAdapter = new ClientMovieRecyclerViewAdapter(movieData, selectedMovies, this);
+                recyclerView.setAdapter(clientMovieRecyclerViewAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(ClientActivity.this));
+                getSelectedMovies();
                 Toast.makeText(this, "Movies is selected", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -91,8 +115,6 @@ public class ClientActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
-
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -143,5 +165,48 @@ public class ClientActivity extends AppCompatActivity {
         }
 
         snackAdapter.notifyDataSetChanged();
+    }
+
+    private void getMovieData() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(MovieApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        MovieApi api = retrofit.create(MovieApi.class);
+
+        Call<NewMovieData> call = api.getNewMovies();
+
+        call.enqueue(new Callback<NewMovieData>() {
+            @Override
+            public void onResponse(Call<NewMovieData> call, Response<NewMovieData> response) {
+                movieData = response.body().getItems();
+            }
+            @Override
+            public void onFailure(Call<NewMovieData> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void getSelectedMovies() {
+        selectedMovies.clear();
+
+        Cursor cursor = movieDb.getMovies();
+
+        if(cursor.getCount() == 0){
+            Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            while (cursor.moveToNext()){
+                String id = cursor.getString(0);
+                String apiId = cursor.getString(1);
+                int screen = cursor.getInt(2);
+                String time = cursor.getString(3);
+
+                selectedMovies.add(new SelectedMovie(id, apiId, screen, time));
+            }
+        }
+
+        clientMovieRecyclerViewAdapter.notifyDataSetChanged();
     }
 }

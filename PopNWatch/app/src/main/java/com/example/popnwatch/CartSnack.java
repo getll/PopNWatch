@@ -22,6 +22,10 @@ public class CartSnack {
     public CartSnack() {
     }
 
+    public double getTotalPrice() {
+        return price * quantity;
+    }
+
     public String getId() {
         return id;
     }

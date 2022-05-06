@@ -2,8 +2,134 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".MovieDetailsActivity">
+
+    <TextView
+        android:id="@+id/movieDetailTimeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="50dp"
+        android:inputType="textMultiLine"
+        android:background="#34FFFFFF"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieDetailPlotTextView" />
+
+    <TextView
+        android:id="@+id/runtimeLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Runtime"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/movieRuntimeTimeTextView"
+        app:layout_constraintStart_toStartOf="@+id/movieRuntimeTimeTextView" />
+
+    <TextView
+        android:id="@+id/timeLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Time"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/movieDetailTimeTextView"
+        app:layout_constraintStart_toStartOf="@+id/movieDetailTimeTextView" />
+
+    <TextView
+        android:id="@+id/movieRuntimeTimeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="50dp"
+        android:background="#34FFFFFF"
+        android:inputType="textMultiLine"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieDetailTimeTextView" />
+
+    <TextView
+        android:id="@+id/plotLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Plot"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/movieDetailPlotTextView"
+        app:layout_constraintStart_toStartOf="@+id/movieDetailPlotTextView" />
+
+    <ImageView
+        android:id="@+id/movieDetailImageView"
+        android:layout_width="250px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieDetailTitleTextView"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/movieDetailTitleTextView"
+        android:layout_width="280dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/movieDetailPlotTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="50dp"
+        android:background="#34FFFFFF"
+        android:inputType="textMultiLine"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieDetailImageView" />
+
+    <Button
+        android:id="@+id/bookTicketButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="72dp"
+        android:text="Book Ticket"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieRuntimeTimeTextView" />
+
+    <EditText
+        android:id="@+id/ticketQuantityEditText"
+        android:layout_width="107dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="72dp"
+        android:ems="10"
+        android:text="1"
+        android:gravity="center"
+        android:background="#99FFFF7F"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/bookTicketButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bookTicketButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

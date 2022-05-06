@@ -47,4 +47,14 @@ public class SelectedMovie {
     public void setTime(String time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "SelectedMovie{" +
+                "id='" + id + '\'' +
+                ", apiId='" + apiId + '\'' +
+                ", screen=" + screen +
+                ", time='" + time + '\'' +
+                '}';
+    }
 }
