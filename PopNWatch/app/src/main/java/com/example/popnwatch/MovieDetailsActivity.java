@@ -70,7 +70,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 }
 
                 //edit cart, not too sure if edit works. yes it does.
-                if (cartDb.editCart(cartId, movieId, Integer.parseInt(quantity), false)) {
+                if (cartDb.editCart(cartId, movieId, title, Integer.parseInt(quantity), false)) {
                     finish();
                 }
             }

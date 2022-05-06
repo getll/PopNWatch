@@ -23,6 +23,7 @@ public class CartDb extends SQLiteOpenHelper {
     private static final String CART_ID = "cart_id";
     private static final String CART_MOVIE_ID = "movie_id";
     private static final String CART_QUANTITY = "quantity";
+    private static final String CART_MOVIE_TITLE = "movie_title";
     private static final String CART_USER_ID = "user_id";
     private static final String CART_IS_PAID = "is_paid";
 
@@ -63,6 +64,7 @@ public class CartDb extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.putNull(CART_QUANTITY);
             contentValues.putNull(CART_MOVIE_ID);
+            contentValues.putNull(CART_MOVIE_TITLE);
             contentValues.put(CART_USER_ID, userId); //this from user
             contentValues.put(CART_IS_PAID, 0); //cart is unpaid
 
@@ -95,11 +97,12 @@ public class CartDb extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public boolean editCart(String id, String movieId, int quantity, boolean isPaid) {
+    public boolean editCart(String id, String movieId, String movieTitle, int quantity, boolean isPaid) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(CART_MOVIE_ID, movieId);
+        contentValues.put(CART_MOVIE_TITLE, movieTitle);
         contentValues.put(CART_QUANTITY, quantity);
         contentValues.put(CART_IS_PAID, (isPaid) ? 1 : 0);
 
@@ -111,11 +114,12 @@ public class CartDb extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean checkoutCart(String id, String movieId, int quantity) {
+    public boolean checkoutCart(String id, String movieId, int quantity, String movieTitle) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(CART_MOVIE_ID, movieId);
+        contentValues.put(CART_MOVIE_ID, movieTitle);
+        contentValues.put(CART_MOVIE_TITLE, quantity);
         contentValues.put(CART_QUANTITY, quantity);
         contentValues.put(CART_IS_PAID, 1);
 

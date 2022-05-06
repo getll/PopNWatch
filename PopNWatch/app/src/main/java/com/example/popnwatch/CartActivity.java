@@ -54,7 +54,13 @@ public class CartActivity extends AppCompatActivity {
         cartDb = new CartDb(this);
         movieDb = new MovieDB(this);
 
-        new GetMovie().execute();
+        //getting the user id
+        SharedPreferences sharedPreferences = getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "error");
+
+        //displaying the cart
+        displayCart(userId);
+
         snackCartRecyclerView = findViewById(R.id.snackCartRecyclerView);
 
         returnButton.setOnClickListener(new View.OnClickListener() {
@@ -106,49 +112,20 @@ public class CartActivity extends AppCompatActivity {
         if (cartCursor.moveToNext()) { //only if there is a movie selected
             cartId = cartCursor.getString(0);
             ticketQuantityTextView.setText(cartCursor.getString(1));
+            movieTicketTitleTextView.setText(cartCursor.getString(3));
 
-            selectedMovieId = cartCursor.getString(3);
+            selectedMovieId = cartCursor.getString(4);
         }
 
         showMovieData(selectedMovieId);
     }
 
-    private void getMovieData() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MovieApi.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        MovieApi api = retrofit.create(MovieApi.class);
-
-        Call<NewMovieData> call = api.getNewMovies();
-
-        call.enqueue(new Callback<NewMovieData>() {
-            @Override
-            public void onResponse(Call<NewMovieData> call, Response<NewMovieData> response) {
-                movieData = response.body().getItems();
-            }
-            @Override
-            public void onFailure(Call<NewMovieData> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
     public void showMovieData(String selectedMovieId) {
         Cursor cursor = movieDb.getMovies();
-
-        System.out.println(movieData);
 
         while (cursor.moveToNext()){
             //find the selected movie
             if (selectedMovieId.equals(cursor.getString(0))) {
-
-                for (NewMovieDataDetail movieDetail : movieData) {
-                    if (movieDetail.getId().equals(cursor.getString(1))) {
-                        //right movie from api
-                        movieTicketTitleTextView.setText(movieDetail.getTitle());
-                    }
-                }
                 movieTicketTimeTextView.setText(cursor.getString(3));
                 movieTicketScreenTextView.setText(cursor.getInt(2) + "");
                 break;
@@ -156,43 +133,43 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
-    class GetMovie extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(MovieApi.BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                MovieApi api = retrofit.create(MovieApi.class);
-
-                Call<NewMovieData> call = api.getNewMovies();
-
-                Response<NewMovieData> response = call.execute();
-                movieData = response.body().getItems();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
-
-            //getting the user id
-            SharedPreferences sharedPreferences = getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
-            String userId = sharedPreferences.getString("userId", "error");
-
-            //displaying the cart
-            displayCart(userId);
-        }
-    }
+//    class GetMovie extends AsyncTask<Void, Void, Void> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            try {
+//                Retrofit retrofit = new Retrofit.Builder()
+//                        .baseUrl(MovieApi.BASE_URL)
+//                        .addConverterFactory(GsonConverterFactory.create())
+//                        .build();
+//                MovieApi api = retrofit.create(MovieApi.class);
+//
+//                Call<NewMovieData> call = api.getNewMovies();
+//
+//                Response<NewMovieData> response = call.execute();
+//                movieData = response.body().getItems();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void unused) {
+//            super.onPostExecute(unused);
+//
+//            //getting the user id
+//            SharedPreferences sharedPreferences = getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
+//            String userId = sharedPreferences.getString("userId", "error");
+//
+//            //displaying the cart
+//            displayCart(userId);
+//        }
+//    }
 }

@@ -52,6 +52,7 @@ public class AdminDB extends SQLiteOpenHelper {
     private static final String CART_ID = "cart_id";
     private static final String CART_MOVIE_ID = "movie_id";
     private static final String CART_QUANTITY = "quantity";
+    private static final String CART_MOVIE_TITLE = "movie_title";
     private static final String CART_USER_ID = "user_id";
     private static final String CART_IS_PAID = "is_paid";
 
@@ -111,6 +112,7 @@ public class AdminDB extends SQLiteOpenHelper {
                 CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 CART_QUANTITY + " INTEGER, " +
                 CART_IS_PAID + " INTEGER, " + //no boolean in sqlite
+                CART_MOVIE_TITLE + " VARCHAR(255), " +
                 CART_MOVIE_ID + " INTEGER, " +
                 CART_USER_ID + " INTEGER, " +
                 "FOREIGN KEY(" + CART_MOVIE_ID + ") REFERENCES " + Cart + "(" + CART_ID + "), " +
