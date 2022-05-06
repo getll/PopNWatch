@@ -95,6 +95,7 @@ public class ClientMovieRecyclerViewAdapter extends RecyclerView.Adapter<ClientM
 
                     Intent intent = new Intent(context, MovieDetailsActivity.class);
 
+                    intent.putExtra("movieId", movie.getId());
                     intent.putExtra("title", movieDataDetail.getTitle());
                     intent.putExtra("img", movieDataDetail.getImage());
                     intent.putExtra("plot", movieDataDetail.getPlot());

@@ -12,39 +12,12 @@ public class CartDb extends SQLiteOpenHelper {
     private static final String DB_NAME = "PopNWatch.db";
     private static final int DB_VERSION = 1;
 
-    private static final String ADMIN = "Admin";
-    private static final String ADMIN_ID ="admin_id";
-    private static final String ADMIN_EMAIL="email";
-    private static final String ADMIN_PASSWORD="password";
-
-    private static final String USER = "User";
-    private static final String USER_ID ="user_id";
-    private static final String USER_FIRSTNAME="firstName";
-    private static final String USER_LASTNAME="lastName";
-    private static final String USER_BIRTHDAY="birthday";
-    private static final String USER_EMAIL="email";
-    private static final String USER_PASSWORD="password";
-
-    private static final String Recipes = "Recipes";
-    private static final String RECIPE_ID ="recipe_id";
-    private static final String RECIPES_NAME="name";
-    private static final String RECIPES_IMG="img";
-    private static final String RECIPES_DESC="description";
-    private static final String RECIPES_ETA="ETA";
-    private static final String RECIPES_GENRE="genre";
-
     private static final String Snacks = "Snacks";
     private static final String SNACK_ID ="snack_id";
     private static final String SNACK_NAME="name";
     private static final String SNACK_IMG="img";
     private static final String SNACK_PRICE="price";
     private static final String SNACK_GENRE="genre";
-
-    private static final String Movies = "Movies";
-    private static final String MOVIE_ID ="movie_id";
-    private static final String MOVIE_API_ID = "api_id";
-    private static final String MOVIE_SCREEN = "screen";
-    private static final String MOVIE_TIME = "time";
 
     private static final String Cart = "Cart";
     private static final String CART_ID = "cart_id";
@@ -184,7 +157,7 @@ public class CartDb extends SQLiteOpenHelper {
         contentValues.put(SNACK_CART_QUANTITY, quantity);
         contentValues.put(SNACK_CART_CART_ID, cartId);
 
-        long result = sqLiteDatabase.update(Snack_Cart, contentValues, SNACK_CART_CART_ID + " = ? ", new String[] {id});
+        long result = sqLiteDatabase.update(Snack_Cart, contentValues, SNACK_CART_ID + " = ? ", new String[] {id});
 
         if (result == 1)
             return true;
@@ -194,6 +167,6 @@ public class CartDb extends SQLiteOpenHelper {
 
     public int deleteSnackCart(String id) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        return sqLiteDatabase.delete(Snack_Cart, SNACK_CART_CART_ID + " = ? ", new String[] {id});
+        return sqLiteDatabase.delete(Snack_Cart, SNACK_CART_ID + " = ? ", new String[] {id});
     }
 }

@@ -2,7 +2,10 @@ package com.example.popnwatch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +28,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
 
         Intent intent = getIntent();
-
+        String movieId = intent.getStringExtra("movieId");
         String title = intent.getStringExtra("title");
         String img = intent.getStringExtra("img");
         String plot = intent.getStringExtra("plot");
@@ -49,7 +52,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         cartDb = new CartDb(this);
 
         //get the current cart for the id
-//        cartDb.getCart();
+        SharedPreferences sharedPreferences = this.getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "error");
 
         bookTicketButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,11 +63,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     quantity = "0";
                 }
 
-                Integer.parseInt(quantity);
+                Cursor cartCursor = cartDb.getCart(userId);
+                String cartId = "";
+                if (cartCursor.moveToNext()) {
+                    cartId = cartCursor.getString(0);
+                }
 
-                //edit cart, not too sure if edit works
-
-                finish();
+                //edit cart, not too sure if edit works. yes it does.
+                if (cartDb.editCart(cartId, movieId, Integer.parseInt(quantity), false)) {
+                    finish();
+                }
             }
         });
     }

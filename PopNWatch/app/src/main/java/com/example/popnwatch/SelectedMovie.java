@@ -48,6 +48,7 @@ public class SelectedMovie {
         this.time = time;
     }
 
+
     @Override
     public String toString() {
         return "SelectedMovie{" +

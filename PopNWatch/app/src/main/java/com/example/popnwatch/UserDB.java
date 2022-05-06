@@ -1,5 +1,6 @@
 package com.example.popnwatch;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,10 +38,21 @@ public class UserDB extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-//    public void addUser() {
-//
-//    }
-//
+    public boolean addUser(String firstName, String lastName, String birthday, String email, String password) {
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_FIRSTNAME, firstName);
+        contentValues.put(USER_LASTNAME, lastName);
+
+        //birthday in yyyy-mm-dd
+        contentValues.put(USER_BIRTHDAY, birthday);
+        contentValues.put(USER_EMAIL, email);
+        contentValues.put(USER_PASSWORD, password);
+        database.insert("User",null,contentValues);
+
+        return true;
+    }
+
 //    public Cursor getAllUsers() {
 //
 //    }

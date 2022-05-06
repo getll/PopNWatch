@@ -2,7 +2,9 @@ package com.example.popnwatch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +21,7 @@ public class AdminLoginActivity extends AppCompatActivity {
     EditText email, password;
     Button login, register, signIn, admin;
     AdminDB adminDB;
+    UserDB userDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class AdminLoginActivity extends AppCompatActivity {
         admin = findViewById(R.id.adminButton);
 
         adminDB = new AdminDB(getApplicationContext());
+        userDB = new UserDB(getApplicationContext());
 
         //clears any currently existing user preferences, only use if want to change every restart
         //otherwise you can check for one and if there is, just keep going
@@ -54,6 +58,15 @@ public class AdminLoginActivity extends AppCompatActivity {
                 Toast.makeText(AdminLoginActivity.this, "Log in sucessful",Toast.LENGTH_SHORT ).show();
 //                Intent i = new Intent(AdminLoginActivity.this, AdminActivity.class);
                 Intent i = new Intent(AdminLoginActivity.this, ClientActivity.class);
+
+                //test to keep login stuff
+//                userDB.addUser("dmar", "erm", "2003-06-06", "ermitano.den@gmail.com", "sauce");
+
+                SharedPreferences sharedPreferences = getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("userId", "1");
+                editor.commit();
+
                 startActivity(i);
             }
         } );
