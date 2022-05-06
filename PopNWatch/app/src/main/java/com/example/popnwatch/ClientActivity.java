@@ -41,7 +41,9 @@ public class ClientActivity extends AppCompatActivity {
         setContentView( R.layout.activity_client );
         recyclerView = findViewById( R.id.recyclerView2);
         snackDB = new SnackDB( this );
+        recipesDb = new RecipesDb( this );
         snackAdapter = new ClientSnackRecyclerViewAdapter(names,imgs, price, genre, ClientActivity.this);
+        recipeAdapter = new ClientRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre , this);
 
     }
 
@@ -76,6 +78,9 @@ public class ClientActivity extends AppCompatActivity {
                 break;
 
             case R.id.Recipes:
+                recyclerView.setAdapter(recipeAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(ClientActivity.this));
+                getRecipes();
                 Toast.makeText(this, "Recipes is selected", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -113,7 +118,7 @@ public class ClientActivity extends AppCompatActivity {
             }
         }
 
-//        recipeAdapter.notifyDataSetChanged();
+        recipeAdapter.notifyDataSetChanged();
 
         recipesDb.updateData("Fish N Chips", "a", "Bussin", "1h30", "Horror");
     }

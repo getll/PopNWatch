@@ -24,6 +24,7 @@
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/activity_admin.xml" value="0.33" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/activity_client.xml" value="0.2" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/activity_client_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/activity_client_recipe.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/activity_edit_recipe.xml" value="0.1" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/activity_edit_snack_.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/activity_edit_snack_recipe.xml" value="0.1" />
@@ -31,6 +32,8 @@
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/add_to_cart_dialog.xml" value="0.25" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/admin_movie_snack_row.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/admin_recipe_row.xml" value="0.1" />
+        <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/client_recipe_row.xml" value="0.2" />
+        <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/client_recipe_view.xml" value="0.33" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/client_snack_row.xml" value="0.33" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/menu/menu_select.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_add_movie.xml" value="0.3822463768115942" />
