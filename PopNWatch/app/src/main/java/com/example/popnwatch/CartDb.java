@@ -135,7 +135,9 @@ public class CartDb extends SQLiteOpenHelper {
     public Cursor getSnackCart(String cartId) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
-        Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + Snack_Cart + " WHERE " + CART_ID + " = ?", new String[] {cartId});
+        Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + Snack_Cart +
+                " INNER JOIN " + Snacks + " on " + Snacks + "." + SNACK_ID + " = " + Snack_Cart + "." + SNACK_CART_SNACK_ID +
+                " WHERE " + CART_ID + " = ?", new String[] {cartId});
 
         return cursor;
     }

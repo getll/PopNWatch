@@ -32,7 +32,7 @@ public class CartActivity extends AppCompatActivity {
     RecyclerView snackCartRecyclerView;
     TextView movieTicketTitleTextView, movieTicketTimeTextView, movieTicketScreenTextView, ticketQuantityTextView;
 
-    List<NewMovieDataDetail> movieData = new ArrayList<>();
+    List<CartSnack> cartSnacks = new ArrayList<>();
     CartDb cartDb;
     MovieDB movieDb;
     String cartId;
@@ -45,6 +45,7 @@ public class CartActivity extends AppCompatActivity {
         returnButton = findViewById(R.id.returnButton);
         editMovieQuantityButton = findViewById(R.id.editMovieQuantityButton);
         checkoutButton = findViewById(R.id.checkoutButton);
+        snackCartRecyclerView = findViewById(R.id.snackCartRecyclerView);
 
         ticketQuantityTextView = findViewById(R.id.ticketQuantityTextView);
         movieTicketTitleTextView = findViewById(R.id.movieTicketTitleTextView);
@@ -60,6 +61,7 @@ public class CartActivity extends AppCompatActivity {
 
         //displaying the cart
         displayCart(userId);
+        getSnacks(userId);
 
         snackCartRecyclerView = findViewById(R.id.snackCartRecyclerView);
 
@@ -131,6 +133,27 @@ public class CartActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    public void getSnacks(String userId) {
+        cartSnacks.clear();
+
+        Cursor cursor = cartDb.getSnackCart(userId);
+
+        while (cursor.moveToNext()){
+            String snackCartId = cursor.getString(0);
+            String snackId = cursor.getString(4);
+            int quantity = cursor.getInt(1);
+            String cartId = cursor.getString(3);
+            String snackName = cursor.getString(5);
+            String snackImage = cursor.getString(6);
+            double snackPrice = cursor.getDouble(7);
+            String snackGenre = cursor.getString(8);
+
+            cartSnacks.add(new CartSnack(snackCartId, quantity, cartId, snackId, snackName, snackImage, snackPrice, snackGenre));
+        }
+
+        //update the recyclerview
     }
 
 //    class GetMovie extends AsyncTask<Void, Void, Void> {

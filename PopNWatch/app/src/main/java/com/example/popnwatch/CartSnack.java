@@ -1,6 +1,11 @@
 package com.example.popnwatch;
 
 public class CartSnack {
+    //cart
+    String snackCartId;
+    int quantity;
+    String cartId;
+
     //snack
     String id;
     String name;
@@ -8,22 +13,42 @@ public class CartSnack {
     double price;
     String genre;
 
-    int quantity;
-
-    public CartSnack(String id, String name, String img, double price, String genre, int quantity) {
+    public CartSnack(String snackCartId, int quantity, String cartId, String id, String name, String img, double price, String genre) {
+        this.snackCartId = snackCartId;
+        this.quantity = quantity;
+        this.cartId = cartId;
         this.id = id;
         this.name = name;
         this.img = img;
         this.price = price;
         this.genre = genre;
-        this.quantity = quantity;
     }
 
     public CartSnack() {
     }
 
-    public double getTotalPrice() {
-        return price * quantity;
+    public String getSnackCartId() {
+        return snackCartId;
+    }
+
+    public void setSnackCartId(String snackCartId) {
+        this.snackCartId = snackCartId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(String cartId) {
+        this.cartId = cartId;
     }
 
     public String getId() {
@@ -64,13 +89,5 @@ public class CartSnack {
 
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 }

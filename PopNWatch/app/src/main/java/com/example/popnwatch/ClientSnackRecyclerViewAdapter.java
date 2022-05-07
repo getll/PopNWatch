@@ -3,11 +3,16 @@ package com.example.popnwatch;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ClientSnackRecyclerViewAdapter extends RecyclerView.Adapter<ClientSnackRecyclerViewAdapter.ViewHolder> {
 
+    ArrayList<String> ids = new ArrayList<>();
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> imgs = new ArrayList<>();
     ArrayList<String> prices = new ArrayList<>();
@@ -28,7 +34,8 @@ public class ClientSnackRecyclerViewAdapter extends RecyclerView.Adapter<ClientS
     Context mContext;
     LayoutInflater minflator;
 
-    public ClientSnackRecyclerViewAdapter(ArrayList<String> names, ArrayList<String> imgs, ArrayList<String> prices, ArrayList<String> genres, Context mContext) {
+    public ClientSnackRecyclerViewAdapter(ArrayList<String> ids, ArrayList<String> names, ArrayList<String> imgs, ArrayList<String> prices, ArrayList<String> genres, Context mContext) {
+        this.ids = ids;
         this.names = names;
         this.imgs = imgs;
         this.prices = prices;
@@ -46,6 +53,8 @@ public class ClientSnackRecyclerViewAdapter extends RecyclerView.Adapter<ClientS
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String snackId = ids.get(position);
+
         Glide.with(mContext)
                 .asBitmap()
                 .load(imgs.get(position))
@@ -53,19 +62,44 @@ public class ClientSnackRecyclerViewAdapter extends RecyclerView.Adapter<ClientS
         holder.title.setText(names.get( position ));
         holder.info.setText(prices.get( position ));
 
-
         holder.add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EditText quantityInput = new EditText(mContext);
+                quantityInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder( mContext );
-                alertDialog.setView( R.layout.add_to_cart_dialog )
+                alertDialog.setView(quantityInput)
                         .setTitle( "Select Quantity" )
                         .setPositiveButton( "Add to cart", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                CartDb cartDb = new CartDb(mContext.getApplicationContext());
 
+                                //get the cart
+                                SharedPreferences sharedPreferences = mContext.getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
+                                String userId = sharedPreferences.getString("userId", "error");
+
+                                Cursor cartCursor = cartDb.getCart(userId);
+                                String cartId = "-1";
+                                if (cartCursor.moveToNext()) {
+                                    cartId = cartCursor.getString(0);
+                                }
+
+                                //get the quantity
+                                String quantityStr = quantityInput.getText().toString();
+                                int quantity = 1;
+
+                                if (!quantityStr.isEmpty() || Integer.parseInt(quantityStr) > 0) {
+                                    quantity = Integer.parseInt(quantityStr);
+                                }
+
+                                //input to the db
+                                if (cartDb.createSnackCart(snackId, quantity, cartId)) {
+                                    Toast.makeText(mContext, "Added snack to cart", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        } )
+                        })
                         .setNegativeButton( "Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

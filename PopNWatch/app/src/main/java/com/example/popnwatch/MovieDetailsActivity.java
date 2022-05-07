@@ -58,9 +58,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         bookTicketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String quantity = ticketQuantityEditText.getText().toString();
-                if (quantity.isEmpty()) {
-                    quantity = "0";
+                String quantityStr = ticketQuantityEditText.getText().toString();
+                int quantity = 1;
+
+                if (!quantityStr.isEmpty() || Integer.parseInt(quantityStr) > 0) {
+                    quantity = Integer.parseInt(quantityStr);
                 }
 
                 Cursor cartCursor = cartDb.getCart(userId);
@@ -70,7 +72,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 }
 
                 //edit cart, not too sure if edit works. yes it does.
-                if (cartDb.editCart(cartId, movieId, title, Integer.parseInt(quantity), false)) {
+                if (cartDb.editCart(cartId, movieId, title, quantity, false)) {
                     finish();
                 }
             }

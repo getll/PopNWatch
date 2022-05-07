@@ -26,6 +26,7 @@ public class ClientActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
+    ArrayList<String> ids = new ArrayList<>();
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> imgs = new ArrayList<>();
     ArrayList<String> price = new ArrayList<>();
@@ -59,7 +60,7 @@ public class ClientActivity extends AppCompatActivity {
         movieDb = new MovieDB(this);
 
         getMovieData();
-        snackAdapter = new ClientSnackRecyclerViewAdapter(names,imgs, price, genre, ClientActivity.this);
+        snackAdapter = new ClientSnackRecyclerViewAdapter(ids, names,imgs, price, genre, ClientActivity.this);
         recipeAdapter = new ClientRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre , this);
 
     }
@@ -141,11 +142,11 @@ public class ClientActivity extends AppCompatActivity {
         }
 
         recipeAdapter.notifyDataSetChanged();
-
-        recipesDb.updateData("Fish N Chips", "a", "Bussin", "1h30", "Horror");
+        //recipesDb.updateData("Fish N Chips", "a", "Bussin", "1h30", "Horror");
     }
 
     public void getSnacks(){
+        ids.clear();
         names.clear();
         imgs.clear();
         price.clear();
@@ -157,6 +158,7 @@ public class ClientActivity extends AppCompatActivity {
             Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
+                ids.add(cursor.getString( 0 ));
                 names.add(cursor.getString( 1 ));
                 imgs.add(cursor.getString(2));
                 price.add(cursor.getString(3));
