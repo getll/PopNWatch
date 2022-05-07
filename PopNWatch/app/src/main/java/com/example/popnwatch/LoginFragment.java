@@ -21,6 +21,7 @@ public class LoginFragment extends Fragment {
 
     Button login;
     EditText email, password;
+    UserDB userDB;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,11 +72,17 @@ public class LoginFragment extends Fragment {
         email = view.findViewById( R.id.emailEditText );
         password = view.findViewById( R.id.passwordEditText );
 
+
         login.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), ClientActivity.class);
-                startActivity( i );
+                userDB = new UserDB(view.getContext());
+
+                if(userDB.verifyCredentials(email.getText().toString().trim(), password.getText().toString().trim()) == true){
+                    Intent i = new Intent(view.getContext(), ClientActivity.class);
+                    startActivity( i );
+                    Toast.makeText(view.getContext(), "Successful login", Toast.LENGTH_SHORT).show();
+                }
             }
         } );
         return view;

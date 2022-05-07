@@ -1,5 +1,6 @@
 package com.example.popnwatch;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +21,7 @@ public class RegisterFragment extends Fragment {
 
     EditText fname, lname, email, password, bday;
     Button register;
+    UserDB userDB;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,7 +66,32 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate( R.layout.fragment_register, container, false );
+        View view = inflater.inflate( R.layout.fragment_register, container, false );
+
+        EditText fname, lname, email, bday, password;
+        Button register;
+
+        fname = view.findViewById( R.id.firstNameEditText );
+        lname = view.findViewById( R.id.lastNameEditText );
+        email = view.findViewById( R.id.emailEditText );
+        bday = view.findViewById( R.id.birthdayEditText );
+        password = view.findViewById( R.id.passwordEditText );
+        register = view.findViewById( R.id.registerAccButton );
+
+
+        register.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userDB = new UserDB( view.getContext() );
+                if(userDB.addUser( fname.getText().toString().trim(), lname.getText().toString().trim(), bday.getText().toString().trim(),
+                        email.getText().toString().trim(), password.getText().toString().trim())){
+                    Toast.makeText(view.getContext(), "User registered Successfully!", Toast.LENGTH_SHORT).show();
+                }else
+                    Toast.makeText(view.getContext(), "Something went wrong:(", Toast.LENGTH_SHORT).show();
+            }
+        } );
+
+
+        return view;
     }
 }

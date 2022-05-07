@@ -10,15 +10,20 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button register, signup, admin;
+    Button register, login, admin;
+    AdminDB adminDB;
+    UserDB userDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_login );
         register = findViewById( R.id.registerButton );
-        signup = findViewById( R.id.signInButton );
+        login = findViewById( R.id.signInButton );
         admin = findViewById( R.id.adminButton );
+
+        adminDB = new AdminDB(getApplicationContext());
+        userDB = new UserDB(getApplicationContext());
 
         register.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -36,6 +41,16 @@ public class LoginActivity extends AppCompatActivity {
                 AdminLoginFragment adminLoginFragmentFragment = new AdminLoginFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentContainerView, adminLoginFragmentFragment);
+                transaction.commit();
+            }
+        } );
+
+        login.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginFragment loginFragment = new LoginFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainerView, loginFragment);
                 transaction.commit();
             }
         } );

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -22,8 +23,12 @@ public class UserDB extends SQLiteOpenHelper {
     private static final String USER_EMAIL="email";
     private static final String USER_PASSWORD="password";
 
+    Context mContext;
+
     public UserDB(@Nullable Context context) {
+
         super(context, DB_NAME, null, DB_VERSION);
+        this.mContext = context;
     }
 
     @Override
@@ -53,7 +58,30 @@ public class UserDB extends SQLiteOpenHelper {
         return true;
     }
 
-//    public Cursor getAllUsers() {
-//
-//    }
+    public boolean verifyCredentials(String email, String password){
+
+        String query = "SELECT * FROM " + USER + " WHERE " + USER_EMAIL + "='" + email + "' AND " + USER_PASSWORD+"='"+password+"'";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db.rawQuery(query, null);
+        }
+
+        if(cursor.getCount() == 0){
+            Toast.makeText(mContext,"Either the user does not exist or password is incorrect", Toast.LENGTH_SHORT).show();
+        }else{
+            while(cursor.moveToNext()){
+                String userEmail = cursor.getString(4);
+                String userPassword = cursor.getString(5);
+                if(userEmail.equals( email) && userPassword.equals(password))
+                {
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+    }
 }
