@@ -4,17 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 public class ClientRecipeActivity extends AppCompatActivity {
 
-    EditText name, imgUrl, desc, eta, genre;
+    TextView name, desc, eta, genre;
+    ImageView img;
     String recipeName, recipeImg, recipeDesc, recipeEta, recipeGenre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_client_recipe );
+        name = findViewById( R.id.recipeTitleTextView );
+        img = findViewById( R.id.recipeImageView );
+        desc = findViewById( R.id.recipeDescTextView );
+        eta = findViewById( R.id.recipeEtaTextView );
+        getIntentExtra();
     }
 
     public void getIntentExtra(){
@@ -28,10 +38,13 @@ public class ClientRecipeActivity extends AppCompatActivity {
             recipeGenre = getIntent().getStringExtra("genre");
 
             name.setText(recipeName);
-            imgUrl.setText(recipeImg);;
-            desc.setText(recipeDesc);;
+            Glide.with(this)
+                    .asBitmap()
+                    .load(recipeImg)
+                    .into(img);
+            desc.setText(recipeDesc);
             eta.setText(recipeEta);;
-            genre.setText(recipeGenre);;
+
 
 
         }else{
