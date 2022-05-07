@@ -26,10 +26,10 @@
             android:exported="false" />
         <activity
             android:name=".CheckoutActivity"
-            android:exported="false" />
+            android:exported="false" />1
         <activity
-            android:name=".ClientLoginActivity"
-            android:exported="false" />
+            android:name=".LoginActivity"
+            android:exported="true" />
         <activity
             android:name=".ClientActivity"
             android:exported="false" />
