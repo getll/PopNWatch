@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -12,6 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PopNWatch">
+        <meta-data android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/map_key"/>
+        <uses-library android:name="org.apache.http.legacy"
+            android:required="false"/>
+        <activity
+            android:name=".MapActivity"
+            android:exported="true" />
         <activity
             android:name=".ClientRecipeActivity"
             android:exported="false" />
@@ -26,7 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".CheckoutActivity"
-            android:exported="false" />1
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="true" />

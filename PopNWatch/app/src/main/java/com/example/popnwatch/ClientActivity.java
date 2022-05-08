@@ -114,6 +114,11 @@ public class ClientActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
 
+            case R.id.Map:
+                Intent map = new Intent(ClientActivity.this, MapActivity.class);
+                startActivity(map);
+                break;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
