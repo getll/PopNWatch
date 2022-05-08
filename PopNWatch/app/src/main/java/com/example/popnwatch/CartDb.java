@@ -171,8 +171,13 @@ public class CartDb extends SQLiteOpenHelper {
         return false;
     }
 
-    public int deleteSnackCart(String id) {
+    public boolean deleteSnackCart(String id) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        return sqLiteDatabase.delete(Snack_Cart, SNACK_CART_ID + " = ? ", new String[] {id});
+        long result = sqLiteDatabase.delete(Snack_Cart, SNACK_CART_ID + " = ? ", new String[] {id});
+
+        if (result == 1)
+            return true;
+
+        return false;
     }
 }

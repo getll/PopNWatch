@@ -1,6 +1,8 @@
 package com.example.popnwatch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
@@ -10,7 +12,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,10 +36,15 @@ public class CartActivity extends AppCompatActivity {
     RecyclerView snackCartRecyclerView;
     TextView movieTicketTitleTextView, movieTicketTimeTextView, movieTicketScreenTextView, ticketQuantityTextView;
 
-    List<CartSnack> cartSnacks = new ArrayList<>();
+    ArrayList<CartSnack> cartSnacks = new ArrayList<>();
+    SnackCartRecyclerViewAdapter snackCartRecyclerViewAdapter;
+
     CartDb cartDb;
     MovieDB movieDb;
     String cartId;
+
+    int ticketQuantity = 0;
+    String ticketTitle = "none";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +68,14 @@ public class CartActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "error");
 
+        snackCartRecyclerView = findViewById(R.id.snackCartRecyclerView);
+        snackCartRecyclerViewAdapter = new SnackCartRecyclerViewAdapter(cartSnacks, this);
+        snackCartRecyclerView.setAdapter(snackCartRecyclerViewAdapter);
+        snackCartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         //displaying the cart
         displayCart(userId);
         getSnacks(userId);
-
-        snackCartRecyclerView = findViewById(R.id.snackCartRecyclerView);
 
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +113,65 @@ public class CartActivity extends AppCompatActivity {
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //getMovieData();
+                TextView summary = new TextView(CartActivity.this);
+                summary.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                summary.setSingleLine(false);
+                summary.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                summary.setTextAppearance(CartActivity.this, R.style.font);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder( CartActivity.this );
+                alertDialog.setView(summary).setTitle( "Summary" );
+
+                double ticketPrice = 15.99;
+                double totalSnackCartPrice = 0;
+                double totalTicketPrice = ticketPrice * ticketQuantity;
+
+                String formattedReceipt = "\tTICKET\n";
+                formattedReceipt += String.format("\t%-4d x %s : %s\n", ticketQuantity, "Tickets for", ticketTitle);
+                formattedReceipt += String.format("\t%-4d x %-20.2f %10.2f\n\n", ticketQuantity, ticketPrice, totalTicketPrice);
+
+                if (!cartSnacks.isEmpty()) {
+                    formattedReceipt += "\tSNACKS\n";
+                }
+
+                for (CartSnack cartSnack : cartSnacks) {
+                    int snackQuantity = cartSnack.getQuantity();
+                    String snackName = cartSnack.getName();
+                    double snackPrice = cartSnack.getPrice();
+                    double totalSnackPrice = snackQuantity * snackPrice;
+
+                    formattedReceipt += String.format("\t%-4d x %s\n", snackQuantity, snackName);
+                    formattedReceipt += String.format("\t%-4d x %-20.2f %10.2f\n\n", snackQuantity, snackPrice, totalSnackPrice);
+
+                    totalSnackCartPrice += totalSnackPrice;
+                }
+
+                double subtotal = totalTicketPrice + totalSnackCartPrice;
+                double qst = 0.09975 * subtotal;
+                double gst = 0.05 * subtotal;
+                double total = subtotal + qst + gst;
+                formattedReceipt += String.format("\t%-27s %10.2f\n", "Subtotal", subtotal);
+                formattedReceipt += String.format("\t%-27s %10.2f\n", "QST", qst);
+                formattedReceipt += String.format("\t%-27s %10.2f\n", "GST", gst);
+                formattedReceipt += String.format("\t%-27s %10.2f", "Total", total);
+
+                summary.setText(formattedReceipt);
+
+                alertDialog.setPositiveButton( "Proceed to payment", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .setNegativeButton( "Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        } );
+                AlertDialog dialog = alertDialog.create();
+                dialog.show();
+
             }
         });
     }
@@ -113,8 +183,12 @@ public class CartActivity extends AppCompatActivity {
 
         if (cartCursor.moveToNext()) { //only if there is a movie selected
             cartId = cartCursor.getString(0);
-            ticketQuantityTextView.setText(cartCursor.getString(1));
-            movieTicketTitleTextView.setText(cartCursor.getString(3));
+
+            ticketQuantity = cartCursor.getInt(1);
+            ticketTitle = cartCursor.getString(3);
+
+            ticketQuantityTextView.setText(ticketQuantity + "");
+            movieTicketTitleTextView.setText(ticketTitle);
 
             selectedMovieId = cartCursor.getString(4);
         }
@@ -154,6 +228,7 @@ public class CartActivity extends AppCompatActivity {
         }
 
         //update the recyclerview
+        snackCartRecyclerViewAdapter.notifyDataSetChanged();
     }
 
 //    class GetMovie extends AsyncTask<Void, Void, Void> {
