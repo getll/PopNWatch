@@ -75,11 +75,12 @@ public class UserDB extends SQLiteOpenHelper {
             while(cursor.moveToNext()){
                 String userEmail = cursor.getString(4);
                 String userPassword = cursor.getString(5);
+                String userId = cursor.getString(0);
                 if(userEmail.equals( email) && userPassword.equals(password))
                 {
                     SharedPreferences sharedPreferences = mContext.getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("userId", "1");
+                    editor.putString("userId", userId);
                     editor.commit();
 
                     return true;

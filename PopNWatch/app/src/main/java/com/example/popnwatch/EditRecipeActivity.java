@@ -31,7 +31,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         update = findViewById( R.id.updateRecipeButton );
         getIntentExtra();
 
-        RecipesDb db = new RecipesDb( EditRecipeActivity.this );
+        RecipesDb db = new RecipesDb( getApplicationContext() );
 
         update.setOnClickListener( new View.OnClickListener() {
             @Override

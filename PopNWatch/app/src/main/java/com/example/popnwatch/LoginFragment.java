@@ -82,6 +82,7 @@ public class LoginFragment extends Fragment {
 
                 if(userDB.verifyCredentials(email.getText().toString().trim(), password.getText().toString().trim())){
                     Intent i = new Intent(view.getContext(), ClientActivity.class);
+
                     startActivity( i );
                     getActivity().overridePendingTransition( R.anim.slide_in_right,
                             R.anim.slide_out_left);
