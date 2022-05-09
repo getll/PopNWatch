@@ -84,10 +84,10 @@ public class AdminLoginFragment extends Fragment {
                     //set the user preferences here for id
                     Toast.makeText(view.getContext(), "Log in sucessful",Toast.LENGTH_SHORT ).show();
                     Intent i = new Intent(view.getContext(), AdminActivity.class);
-
+                    getActivity().overridePendingTransition( R.anim.slide_in_right,
+                            R.anim.slide_out_left);
                     startActivity(i);
-                }else
-                    Toast.makeText(view.getContext(), "Invalid Credentials",Toast.LENGTH_SHORT ).show();
+                }
             }
         } );
         // Inflate the layout for this fragment
@@ -100,7 +100,7 @@ public class AdminLoginFragment extends Fragment {
         Cursor cursor = adminDB.retrieveAdmin();
 
         if(cursor.getCount() == 0){
-            Toast.makeText(view.getContext(),"No data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(),"Invalid Credentials", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
                 String adminEmail = cursor.getString(1);

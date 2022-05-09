@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/Map"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/icons8_map_50"
         android:title="Map"
         app:showAsAction="always"/>
 
     <item android:id="@+id/Logout"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/icons8_logout_50"
         android:title="Logout"
         app:showAsAction="always"/>
     <item android:id="@+id/selectPage"
@@ -19,20 +19,20 @@
         <menu>
 
             <item android:id="@+id/Movies"
-                android:icon="@drawable/ic_launcher_background"
+                android:icon="@drawable/icons8_movie_50"
                 android:title="Movies"
                 app:showAsAction="always"/>
             <item android:id="@+id/Snacks"
-                android:icon="@drawable/ic_launcher_background"
+                android:icon="@drawable/icons8_potato_chips_50"
                 android:title="Snacks"
                 app:showAsAction="always"/>
             <item android:id="@+id/Recipes"
-                android:icon="@drawable/ic_launcher_background"
+                android:icon="@drawable/icons8_cooking_book_50"
                 android:title="Recipes"
                 app:showAsAction="always"/>
 
             <item android:id="@+id/Cart"
-                android:icon="@drawable/ic_launcher_background"
+                android:icon="@drawable/icons8_favorite_cart_50"
                 android:title="Cart"
                 app:showAsAction="always"/>
 

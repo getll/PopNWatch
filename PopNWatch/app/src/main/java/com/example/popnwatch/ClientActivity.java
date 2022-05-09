@@ -112,11 +112,15 @@ public class ClientActivity extends AppCompatActivity {
             case R.id.Cart:
                 Intent intent = new Intent(ClientActivity.this, CartActivity.class);
                 startActivity(intent);
+                overridePendingTransition(  R.anim.slide_in_right,
+                        R.anim.slide_out_left);
                 break;
 
             case R.id.Map:
                 Intent map = new Intent(ClientActivity.this, MapActivity.class);
                 startActivity(map);
+                overridePendingTransition( R.anim.slide_in_right,
+                        R.anim.slide_out_left);
                 break;
 
             default:

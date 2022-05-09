@@ -81,6 +81,8 @@ public class LoginFragment extends Fragment {
                 if(userDB.verifyCredentials(email.getText().toString().trim(), password.getText().toString().trim()) == true){
                     Intent i = new Intent(view.getContext(), ClientActivity.class);
                     startActivity( i );
+                    getActivity().overridePendingTransition( R.anim.slide_in_right,
+                            R.anim.slide_out_left);
                     Toast.makeText(view.getContext(), "Successful login", Toast.LENGTH_SHORT).show();
                 }
             }
