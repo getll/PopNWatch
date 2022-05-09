@@ -3,6 +3,7 @@ package com.example.popnwatch;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,6 +85,10 @@ public class RegisterFragment extends Fragment {
                 userDB = new UserDB( view.getContext() );
                 if(userDB.addUser( fname.getText().toString().trim(), lname.getText().toString().trim(), bday.getText().toString().trim(),
                         email.getText().toString().trim(), password.getText().toString().trim())){
+                    LoginFragment loginFragment = new LoginFragment();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainerView, loginFragment);
+                    transaction.commit();
                     Toast.makeText(view.getContext(), "User registered Successfully!", Toast.LENGTH_SHORT).show();
                 }else
                     Toast.makeText(view.getContext(), "Something went wrong:(", Toast.LENGTH_SHORT).show();

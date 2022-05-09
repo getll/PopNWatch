@@ -9,12 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,8 +64,12 @@ public class ClientActivity extends AppCompatActivity {
         movieDb = new MovieDB(this);
 
         getMovieData();
+
+
         snackAdapter = new ClientSnackRecyclerViewAdapter(ids, names,imgs, price, genre, ClientActivity.this);
         recipeAdapter = new ClientRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre , this);
+
+
     }
 
     @Override
@@ -229,4 +235,6 @@ public class ClientActivity extends AppCompatActivity {
 
         clientMovieRecyclerViewAdapter.notifyDataSetChanged();
     }
+
+
 }

@@ -53,20 +53,12 @@ public class AdminActivity extends AppCompatActivity {
     MovieDB movieDb;
 
     FloatingActionButton mainFab, selectedMovieFab, movieFab, snackFab, recipeFab, cartFab;
-    Button add, search;
+    Button add;
     RecyclerView recyclerView;
     boolean isVisible;
 
     //Which db to manipulate
     String currentSelect;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult( requestCode, resultCode, data );
-        if(requestCode == 1){
-            recreate();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +74,6 @@ public class AdminActivity extends AppCompatActivity {
         cartFab = findViewById( R.id.cartFloatingActionButton );
 
         add = findViewById( R.id.addButton );
-        search = findViewById( R.id.searchButton );
         isVisible = false;
 
         snackDB = new SnackDB( getApplicationContext() );
@@ -91,6 +82,7 @@ public class AdminActivity extends AppCompatActivity {
 
         snackAdapter = new AdminSnackRecylerViewAdapter(ids, names,imgs, price, genre, AdminActivity.this);
         recipeAdapter = new AdminRecipeRecyclerViewAdapter(recipeIds, recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre, AdminActivity.this);
+        selectedMovieRecyclerViewAdapter = new SelectedMovieRecyclerViewAdapter(movieData, selectedMovies, AdminActivity.this);
 
         getMovieData();
 
@@ -194,13 +186,13 @@ public class AdminActivity extends AppCompatActivity {
 
                    case "Snack":
                        Intent i = new Intent(AdminActivity.this, AddSnackActivity.class);
-                       startActivity(i);
+                       startActivityForResult(i, 1);
                        Toast.makeText(AdminActivity.this, "Seleccted " + currentSelect, Toast.LENGTH_SHORT).show();
                        break;
 
                    case "Recipe":
                        Intent r = new Intent(AdminActivity.this, AddRecipeActivity.class);
-                       startActivity(r);
+                       startActivityForResult(r, 2);
                        Toast.makeText(AdminActivity.this, "Selected " + currentSelect, Toast.LENGTH_SHORT).show();
 
                        break;
@@ -312,5 +304,21 @@ public class AdminActivity extends AppCompatActivity {
         }
 
         recipeAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 0) { //checking request and result code
+                getSelectedMovies();
+            }
+            else if (requestCode == 1) {
+                getSnacks();
+            }
+            else {
+                getRecipes();
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.popnwatch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,8 @@ public class EditSnackActivity extends AppCompatActivity {
                         Double.parseDouble(price.getText().toString().trim()),
                         genre.getText().toString().trim() )) {
                     Toast.makeText( EditSnackActivity.this, "Snack updated", Toast.LENGTH_SHORT ).show();
+                    Intent resultIntent = new Intent();
+                    setResult(RESULT_OK, resultIntent);
                     finish();
                 }
             }

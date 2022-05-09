@@ -80,6 +80,8 @@ public class EditMovieActivity extends AppCompatActivity {
                     Toast.makeText(EditMovieActivity.this, "Movie could not be edited", Toast.LENGTH_SHORT).show();
                 }
 
+                Intent resultIntent = new Intent();
+                setResult(RESULT_OK, resultIntent);
                 finish();
             }
         });

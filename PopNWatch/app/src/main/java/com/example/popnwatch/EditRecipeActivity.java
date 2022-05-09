@@ -1,5 +1,6 @@
 package com.example.popnwatch;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -39,7 +40,9 @@ public class EditRecipeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (db.updateData(id, name.getText().toString().trim(), imgUrl.getText().toString().trim(),
                         desc.getText().toString().trim(), eta.getText().toString().trim(), genre.getText().toString().trim() )) {
-                    Toast.makeText( EditRecipeActivity.this, "Recipe updated", Toast.LENGTH_SHORT ).show();
+//                    Toast.makeText( EditRecipeActivity.this, "Recipe updated", Toast.LENGTH_SHORT ).show();
+                    Intent resultIntent = new Intent();
+                    setResult(RESULT_OK, resultIntent);
                     finish();
                 }
             }

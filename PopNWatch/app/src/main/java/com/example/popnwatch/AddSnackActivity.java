@@ -2,6 +2,7 @@ package com.example.popnwatch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -41,7 +42,11 @@ public class AddSnackActivity extends AppCompatActivity {
 
                 snackDB.addSnack(name.getText().toString().trim(), imgUrl.getText().toString().trim(),
                         Double.parseDouble(price.getText().toString().trim()), genre.getText().toString().trim());
+
                 Toast.makeText(AddSnackActivity.this, "Snack Added Successfully ", Toast.LENGTH_SHORT).show();
+                Intent resultIntent = new Intent();
+                setResult(RESULT_OK, resultIntent);
+                finish();
             }
         } );
     }

@@ -132,7 +132,7 @@ public class SelectedMovieRecyclerViewAdapter extends RecyclerView.Adapter<Selec
                     intent.putExtra("id", selectedMovie.getId());
                     intent.putExtra("screen", selectedMovie.getScreen());
 
-                    context.startActivity(intent);
+                    ((AdminActivity) context).startActivityForResult(intent, 0);
 
                     ((AdminActivity) context).getSelectedMovies();
                     notifyDataSetChanged();

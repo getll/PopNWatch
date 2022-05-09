@@ -77,11 +77,7 @@ public class AdminSnackRecylerViewAdapter extends RecyclerView.Adapter<AdminSnac
                 i.putExtra("imgs", String.valueOf(imgs.get(holder.getAdapterPosition())));
                 i.putExtra("price", String.valueOf(prices.get(holder.getAdapterPosition())));
                 i.putExtra("genre", String.valueOf(genres.get(holder.getAdapterPosition())));
-                mContext.startActivity(i);
-                Toast.makeText(mContext,"Snack Updated", Toast.LENGTH_SHORT).show();
-
-                ((AdminActivity) mContext).getSnacks();
-                notifyDataSetChanged();
+                ((AdminActivity) mContext).startActivityForResult(i, 1);
             }
         } );
 

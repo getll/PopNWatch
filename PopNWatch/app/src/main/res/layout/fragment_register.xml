@@ -54,7 +54,7 @@
         android:background="#99FFFF7F"
         android:ems="10"
         android:hint="Date of birth"
-        android:inputType="textPersonName"
+        android:inputType="date"
         app:layout_constraintBottom_toTopOf="@+id/registerAccButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

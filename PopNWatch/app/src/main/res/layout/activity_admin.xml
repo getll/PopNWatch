@@ -20,63 +20,35 @@
         app:srcCompat="@android:drawable/arrow_up_float"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
-        android:id="@+id/searchMovieEditText"
-        android:layout_width="311dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="52dp"
-        android:background="#99FFFF7F"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Button
-        android:id="@+id/searchButton"
-        android:layout_width="203dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#FFFF7F"
-        android:text="Search"
-        android:textSize="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/addButton"
-        app:layout_constraintHorizontal_bias="0.892"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchMovieEditText" />
 
     <Button
         android:id="@+id/addButton"
-        android:layout_width="105dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="45dp"
         android:backgroundTint="#FFFF7F"
         android:text="+"
         android:textSize="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchMovieEditText" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Filter"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/searchMovieEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="326dp"
-        android:layout_height="366dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/mainFloatingActionButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchButton" />
+        app:layout_constraintTop_toBottomOf="@+id/addButton"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/movieFloatingActionButton"

@@ -74,10 +74,7 @@ public class AdminRecipeRecyclerViewAdapter extends RecyclerView.Adapter<AdminRe
                 i.putExtra("desc", String.valueOf(desc.get(holder.getAdapterPosition())));
                 i.putExtra("eta", String.valueOf(eta.get(holder.getAdapterPosition())));
                 i.putExtra("genre", String.valueOf(genre.get(holder.getAdapterPosition())));
-                mContext.startActivity(i);
-
-                Toast.makeText(mContext,"Recipe Updated", Toast.LENGTH_SHORT).show();
-                ((AdminActivity) mContext).getRecipes();
+                ((AdminActivity) mContext).startActivityForResult(i, 2);
             }
         } );
 
