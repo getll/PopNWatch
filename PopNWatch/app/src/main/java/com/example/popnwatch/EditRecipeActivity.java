@@ -16,7 +16,7 @@ import java.util.List;
 public class EditRecipeActivity extends AppCompatActivity {
 
     EditText name, imgUrl, desc, eta, genre;
-    String recipeName, recipeImg, recipeDesc, recipeEta, recipeGenre;
+    String id, recipeName, recipeImg, recipeDesc, recipeEta, recipeGenre;
     Button update;
 
     @Override
@@ -29,6 +29,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         eta = findViewById( R.id.etaEditTextView );
         genre = findViewById( R.id.genreRecipeEditTextView );
         update = findViewById( R.id.updateRecipeButton );
+
         getIntentExtra();
 
         RecipesDb db = new RecipesDb( getApplicationContext() );
@@ -36,24 +37,26 @@ public class EditRecipeActivity extends AppCompatActivity {
         update.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.updateData(name.getText().toString().trim(), imgUrl.getText().toString().trim(),
-                        desc.getText().toString().trim(), eta.getText().toString().trim(), genre.getText().toString().trim() );
-                Toast.makeText( EditRecipeActivity.this, name.getText().toString().trim(), Toast.LENGTH_SHORT ).show();
+                if (db.updateData(id, name.getText().toString().trim(), imgUrl.getText().toString().trim(),
+                        desc.getText().toString().trim(), eta.getText().toString().trim(), genre.getText().toString().trim() )) {
+                    Toast.makeText( EditRecipeActivity.this, "Recipe updated", Toast.LENGTH_SHORT ).show();
+                    finish();
+                }
             }
-        } );
+        });
 
-        List<String> recipeNames = new ArrayList<>();
-        Cursor cursor = db.retrieveData();
-
-        if(cursor.getCount() == 0){
-            Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
-        }else{
-            while(cursor.moveToNext()){
-                recipeNames.add(cursor.getString( 1 ));
-            }
-        }
-
-        System.out.println(recipeNames);
+//        List<String> recipeNames = new ArrayList<>();
+//        Cursor cursor = db.retrieveData();
+//
+//        if(cursor.getCount() == 0){
+//            Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
+//        }else{
+//            while(cursor.moveToNext()){
+//                recipeNames.add(cursor.getString( 1 ));
+//            }
+//        }
+//
+//        System.out.println(recipeNames);
 
     }
 
@@ -62,6 +65,7 @@ public class EditRecipeActivity extends AppCompatActivity {
                 getIntent().hasExtra("desc") && getIntent().hasExtra("eta") && getIntent().hasExtra( "genre" )){
 
             recipeName = getIntent().getStringExtra("names") ;
+            id = getIntent().getStringExtra("id") ;
             recipeImg = getIntent().getStringExtra("imgs");
             recipeDesc = getIntent().getStringExtra("desc");
             recipeEta = getIntent().getStringExtra("eta");

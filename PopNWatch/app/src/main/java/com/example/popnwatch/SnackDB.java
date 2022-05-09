@@ -57,7 +57,18 @@ public class SnackDB extends SQLiteOpenHelper {
 
     }
 
+    public boolean updateData(String id, String name, String img, double price, String genre){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(ID, id);
+        cv.put(SNACK_NAME, name);
+        cv.put(SNACK_IMG, img);
+        cv.put(SNACK_PRICE, price);
+        cv.put(SNACK_GENRE, genre);
 
+        long result = sqLiteDatabase.update(Snacks, cv, "snack_id = ? ", new String[] {id});
+        return (result != 0);
+    }
 
     public void deleteData(String name){
         SQLiteDatabase db = this.getWritableDatabase();

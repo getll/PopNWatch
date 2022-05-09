@@ -65,16 +65,14 @@ public class MovieDB extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(MOVIE_API_ID, apiId);
+        contentValues.put(MOVIE_ID, id);
         contentValues.put(MOVIE_SCREEN, screen);
         contentValues.put(MOVIE_TIME, time);
 
-        long result = sqLiteDatabase.update(Movies, contentValues, MOVIE_ID + " = ? ", new String[] {id});
+        long result = sqLiteDatabase.update(Movies, contentValues, MOVIE_ID + " =?", new String[] {id});
         sqLiteDatabase.close();
 
-        if (result < 1)
-            return false;
-        else
-            return true;
+        return result != 0;
     }
 
     public int removeMovie(String id) {

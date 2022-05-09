@@ -32,11 +32,13 @@ public class AdminActivity extends AppCompatActivity {
     MovieRecyclerAdapter movieRecyclerAdapter;
     SelectedMovieRecyclerViewAdapter selectedMovieRecyclerViewAdapter;
 
+    ArrayList<String> ids = new ArrayList<>();
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> imgs = new ArrayList<>();
     ArrayList<String> price = new ArrayList<>();
     ArrayList<String> genre = new ArrayList<>();
 
+    ArrayList<String> recipeIds = new ArrayList<>();
     ArrayList<String> recipeNames = new ArrayList<>();
     ArrayList<String> recipeImgs = new ArrayList<>();
     ArrayList<String> recipeDesc = new ArrayList<>();
@@ -83,12 +85,12 @@ public class AdminActivity extends AppCompatActivity {
         search = findViewById( R.id.searchButton );
         isVisible = false;
 
-        snackDB = new SnackDB( this );
-        recipesDb = new RecipesDb(this);
-        movieDb = new MovieDB(this);
+        snackDB = new SnackDB( getApplicationContext() );
+        recipesDb = new RecipesDb(getApplicationContext());
+        movieDb = new MovieDB(getApplicationContext());
 
-        snackAdapter = new AdminSnackRecylerViewAdapter(names,imgs, price, genre, AdminActivity.this);
-        recipeAdapter = new AdminRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre, AdminActivity.this);
+        snackAdapter = new AdminSnackRecylerViewAdapter(ids, names,imgs, price, genre, AdminActivity.this);
+        recipeAdapter = new AdminRecipeRecyclerViewAdapter(recipeIds, recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre, AdminActivity.this);
 
         getMovieData();
 
@@ -141,7 +143,6 @@ public class AdminActivity extends AppCompatActivity {
             public void onClick(View view) {
                 currentSelect = "SelectedMovie";
                 changeButtonVisibility();
-//                Toast.makeText(AdminActivity.this, "weeewie " + currentSelect, Toast.LENGTH_SHORT).show();
 
                 selectedMovieRecyclerViewAdapter = new SelectedMovieRecyclerViewAdapter(movieData, selectedMovies, AdminActivity.this);
                 recyclerView.setAdapter(selectedMovieRecyclerViewAdapter);
@@ -183,8 +184,6 @@ public class AdminActivity extends AppCompatActivity {
         add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
 
 //                //This allows user to select which database they would want to mess with
                switch(currentSelect){
@@ -270,6 +269,7 @@ public class AdminActivity extends AppCompatActivity {
             Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
+                ids.add(cursor.getString( 0 ));
                 names.add(cursor.getString( 1 ));
                 imgs.add(cursor.getString(2));
                 price.add(cursor.getString(3));
@@ -302,6 +302,7 @@ public class AdminActivity extends AppCompatActivity {
             Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
+                recipeIds.add(cursor.getString( 0 ));
                 recipeNames.add(cursor.getString( 1 ));
                 recipeImgs.add(cursor.getString(2));
                 recipeDesc.add(cursor.getString(3));
@@ -311,7 +312,5 @@ public class AdminActivity extends AppCompatActivity {
         }
 
         recipeAdapter.notifyDataSetChanged();
-
-        recipesDb.updateData("Fish N Chips", "a", "Bussin", "1h30", "Horror");
     }
 }

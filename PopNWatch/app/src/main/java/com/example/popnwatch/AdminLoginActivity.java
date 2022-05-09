@@ -58,10 +58,7 @@ public class AdminLoginActivity extends AppCompatActivity {
                 //test to keep login stuff
 //                userDB.addUser("dmar", "erm", "2003-06-06", "ermitano.den@gmail.com", "sauce");
 
-                SharedPreferences sharedPreferences = getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("userId", "1");
-                editor.commit();
+
 
                 startActivity(i);
             }

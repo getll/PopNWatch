@@ -23,6 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdminSnackRecylerViewAdapter extends RecyclerView.Adapter<AdminSnackRecylerViewAdapter.ViewHolder> {
 
+    ArrayList<String> ids = new ArrayList<>();
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> imgs = new ArrayList<>();
     ArrayList<String> prices = new ArrayList<>();
@@ -31,7 +32,8 @@ public class AdminSnackRecylerViewAdapter extends RecyclerView.Adapter<AdminSnac
     Context mContext;
     LayoutInflater minflator;
 
-    public AdminSnackRecylerViewAdapter(ArrayList<String> names ,ArrayList<String> imgs, ArrayList<String> prices, ArrayList<String> genres, Context mContext) {
+    public AdminSnackRecylerViewAdapter(ArrayList<String> ids , ArrayList<String> names ,ArrayList<String> imgs, ArrayList<String> prices, ArrayList<String> genres, Context mContext) {
+        this.ids = ids;
         this.names = names;
         this.imgs = imgs;
         this.prices = prices;
@@ -60,6 +62,7 @@ public class AdminSnackRecylerViewAdapter extends RecyclerView.Adapter<AdminSnac
             public void onClick(View view) {
                 SnackDB db = new SnackDB( mContext );
                 db.deleteData( names.get( holder.getAdapterPosition() ) );
+
                 ((AdminActivity) mContext).getSnacks();
                 notifyDataSetChanged();
             }
@@ -69,12 +72,16 @@ public class AdminSnackRecylerViewAdapter extends RecyclerView.Adapter<AdminSnac
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(mContext, EditSnackActivity.class );
+                i.putExtra("id", String.valueOf(ids.get(holder.getAdapterPosition())));
                 i.putExtra("names", String.valueOf(names.get(holder.getAdapterPosition())));
                 i.putExtra("imgs", String.valueOf(imgs.get(holder.getAdapterPosition())));
                 i.putExtra("price", String.valueOf(prices.get(holder.getAdapterPosition())));
                 i.putExtra("genre", String.valueOf(genres.get(holder.getAdapterPosition())));
                 mContext.startActivity(i);
-                Toast.makeText(mContext,"works", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"Snack Updated", Toast.LENGTH_SHORT).show();
+
+                ((AdminActivity) mContext).getSnacks();
+                notifyDataSetChanged();
             }
         } );
 

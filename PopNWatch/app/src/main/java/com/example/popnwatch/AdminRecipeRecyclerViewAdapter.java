@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class AdminRecipeRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecipeRecyclerViewAdapter.ViewHolder> {
 
     ArrayList<String> names = new ArrayList<>();
+    ArrayList<String> ids = new ArrayList<>();
     ArrayList<String> imgs = new ArrayList<>();
     ArrayList<String> desc = new ArrayList<>();
     ArrayList<String> eta = new ArrayList<>();
@@ -30,8 +31,9 @@ public class AdminRecipeRecyclerViewAdapter extends RecyclerView.Adapter<AdminRe
     Context mContext;
     LayoutInflater minflator;
 
-    public AdminRecipeRecyclerViewAdapter(ArrayList<String> names, ArrayList<String> imgs, ArrayList<String> desc, ArrayList<String> eta, ArrayList<String> genre, Context mContext) {
+    public AdminRecipeRecyclerViewAdapter(ArrayList<String> ids, ArrayList<String> names, ArrayList<String> imgs, ArrayList<String> desc, ArrayList<String> eta, ArrayList<String> genre, Context mContext) {
         this.names = names;
+        this.ids = ids;
         this.imgs = imgs;
         this.desc = desc;
         this.eta = eta;
@@ -59,7 +61,6 @@ public class AdminRecipeRecyclerViewAdapter extends RecyclerView.Adapter<AdminRe
                 RecipesDb db = new RecipesDb( mContext );
                 db.deleteData( names.get( holder.getAdapterPosition() ) );
                 ((AdminActivity) mContext).getRecipes();
-                notifyDataSetChanged();;
             }
         } );
 
@@ -67,13 +68,16 @@ public class AdminRecipeRecyclerViewAdapter extends RecyclerView.Adapter<AdminRe
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(mContext, EditRecipeActivity.class );
+                i.putExtra("id", String.valueOf(ids.get(holder.getAdapterPosition())));
                 i.putExtra("names", String.valueOf(names.get(holder.getAdapterPosition())));
                 i.putExtra("imgs", String.valueOf(imgs.get(holder.getAdapterPosition())));
                 i.putExtra("desc", String.valueOf(desc.get(holder.getAdapterPosition())));
                 i.putExtra("eta", String.valueOf(eta.get(holder.getAdapterPosition())));
                 i.putExtra("genre", String.valueOf(genre.get(holder.getAdapterPosition())));
                 mContext.startActivity(i);
-                Toast.makeText(mContext,"works", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(mContext,"Recipe Updated", Toast.LENGTH_SHORT).show();
+                ((AdminActivity) mContext).getRecipes();
             }
         } );
 

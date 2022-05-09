@@ -80,7 +80,7 @@ public class ClientActivity extends AppCompatActivity {
             case R.id.Logout:
                 //destroy the user preferences, finish activity
                 SharedPreferences sharedPreferences = getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
-                sharedPreferences.edit().remove("userId"). commit();
+                sharedPreferences.edit().remove("userId").commit();
                 Toast.makeText(this, " Logout is selected", Toast.LENGTH_SHORT).show();
                 finish();
                 break;

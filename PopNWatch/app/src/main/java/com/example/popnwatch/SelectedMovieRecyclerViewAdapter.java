@@ -94,7 +94,7 @@ public class SelectedMovieRecyclerViewAdapter extends RecyclerView.Adapter<Selec
             deleteMovieButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MovieDB movieDB = new MovieDB(context);
+                    MovieDB movieDB = new MovieDB(context.getApplicationContext());
 
                     int position = getAbsoluteAdapterPosition();
 

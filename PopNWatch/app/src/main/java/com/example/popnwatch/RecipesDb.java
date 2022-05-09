@@ -68,9 +68,10 @@ public class RecipesDb extends SQLiteOpenHelper {
         }
     }
 
-    public void updateData( String name, String imgUrl, String desc, String eta, String genre){
+    public boolean updateData(String id, String name, String imgUrl, String desc, String eta, String genre){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+        cv.put(ID, id);
         cv.put(RECIPES_NAME, name);
         cv.put(RECIPES_IMG, imgUrl);
         cv.put(RECIPES_DESC, desc);
@@ -78,13 +79,8 @@ public class RecipesDb extends SQLiteOpenHelper {
         cv.put(RECIPES_GENRE, genre);
 
 
-        long result = sqLiteDatabase.update(Recipes, cv, "name = ? ", new String[] {name});
-        System.out.println(result);
-        if(result == 0){
-            Toast.makeText(context, "Failed",Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(context, "Success",Toast.LENGTH_SHORT).show();
-        }
+        long result = sqLiteDatabase.update(Recipes, cv, "recipe_id = ? ", new String[] {id});
+        return (result != 0);
 //
 //        String query = "update Recipes set description='" + desc + "' where name='" + name + "'";
 //        sqLiteDatabase.execSQL(query);

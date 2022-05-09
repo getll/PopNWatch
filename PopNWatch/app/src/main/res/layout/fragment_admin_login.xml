@@ -51,7 +51,7 @@
         android:layout_height="51dp"
         android:gravity="center"
         android:text="PopNWatch"
-        android:textColor="#FFFF7F"
+        android:textColor="#5274CA"
         android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"

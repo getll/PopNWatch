@@ -55,10 +55,25 @@ public class EditMovieActivity extends AppCompatActivity {
 
         movieDB = new MovieDB(getApplicationContext());
 
+
         editShowingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (movieDB.editMovie(id, apiId, screen, time)) {
+
+                int newScreen = Integer.parseInt(screenEditText.getText().toString().trim());
+                String newTime = "";
+
+                if (morningRadioButton.isChecked()) {
+                    newTime = "morning";
+                }
+                else if (afternoonRadioButton.isChecked()) {
+                    newTime = "afternoon";
+                }
+                else {
+                    newTime = "evening";
+                }
+
+                if (movieDB.editMovie(id, apiId, newScreen, newTime)) {
                     Toast.makeText(EditMovieActivity.this, "Movie edited", Toast.LENGTH_SHORT).show();
                 }
                 else {

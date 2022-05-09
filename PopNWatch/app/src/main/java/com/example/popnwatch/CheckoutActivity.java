@@ -3,10 +3,12 @@ package com.example.popnwatch;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,11 +37,19 @@ public class CheckoutActivity extends AppCompatActivity {
 
         totalTextView.setText(String.format("Total: %.2f", total));
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("CheckoutNotification", "Checkout Notification Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (cartDb.checkoutCart(cartId)) {
                     Toast.makeText(CheckoutActivity.this, "Payment Made.", Toast.LENGTH_SHORT).show();
+
                     sendNotification();
                     finish();
                 }
@@ -51,13 +61,13 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     public void sendNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(CheckoutActivity.this, "Checkout");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(CheckoutActivity.this, "CheckoutNotification");
         builder.setContentTitle("PopNWatch");
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
         builder.setContentText("Checkout Complete! Click here to view all tickets.");
-        builder.setAutoCancel(true);
+        builder.setSmallIcon(R.drawable.popnwatch);
+        builder.setAutoCancel(false);
 
-        Intent notificationIntent = new Intent(CheckoutActivity.this, ClientActivity.class);
+        Intent notificationIntent = new Intent(CheckoutActivity.this, PastCartActivity.class);
 
         PendingIntent contentIntent = PendingIntent.getActivity(CheckoutActivity.this,0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
