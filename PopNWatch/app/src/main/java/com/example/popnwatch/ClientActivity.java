@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -62,7 +64,6 @@ public class ClientActivity extends AppCompatActivity {
         getMovieData();
         snackAdapter = new ClientSnackRecyclerViewAdapter(ids, names,imgs, price, genre, ClientActivity.this);
         recipeAdapter = new ClientRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre , this);
-
     }
 
     @Override
@@ -78,9 +79,10 @@ public class ClientActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.Logout:
                 //destroy the user preferences, finish activity
-
-                finish();
+                SharedPreferences sharedPreferences = getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
+                sharedPreferences.edit().remove("userId"). commit();
                 Toast.makeText(this, " Logout is selected", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
 
             case R.id.selectPage:
@@ -120,6 +122,13 @@ public class ClientActivity extends AppCompatActivity {
                 Intent map = new Intent(ClientActivity.this, MapActivity.class);
                 startActivity(map);
                 overridePendingTransition( R.anim.slide_in_right,
+                        R.anim.slide_out_left);
+                break;
+
+            case R.id.PastCarts:
+                Intent carts = new Intent(ClientActivity.this, PastCartActivity.class);
+                startActivity(carts);
+                overridePendingTransition(  R.anim.slide_in_right,
                         R.anim.slide_out_left);
                 break;
 

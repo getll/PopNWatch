@@ -76,6 +76,7 @@ public class AdminLoginFragment extends Fragment {
 
         adminDB = new AdminDB(view.getContext());
         userDB = new UserDB(view.getContext());
+//        adminDB.addAdmin("admin@hotmail.com", "admin");
 
         login.setOnClickListener( new View.OnClickListener() {
             @Override

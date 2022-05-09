@@ -39,12 +39,14 @@
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/fragment_admin_login.xml" value="0.21" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/fragment_login.xml" value="0.11203703703703703" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/fragment_register.xml" value="0.1" />
-        <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/layout/slide_in_left.xml" value="0.20208333333333334" />
         <entry key="..\:/Users/Alago/Desktop/PopNWatch/PopNWatch/app/src/main/res/menu/menu_select.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/drawable/divider.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_add_movie.xml" value="0.3822463768115942" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_add_recipe.xml" value="0.3822463768115942" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_add_snack.xml" value="0.3822463768115942" />
+        <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_admin.xml" value="0.5" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_admin_login.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_admin_past_carts.xml" value="0.25" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_cart.xml" value="0.33" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_checkout.xml" value="0.33" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_client.xml" value="0.31979166666666664" />
@@ -54,6 +56,8 @@
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_edit_snack_.xml" value="0.3822463768115942" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_login.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_movie_details.xml" value="0.31979166666666664" />
+        <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_past_cart.xml" value="0.1" />
+        <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/activity_past_cart_activities.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/add_to_cart_dialog.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/admin_movie_row.xml" value="0.3822463768115942" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/admin_movie_snack_row.xml" value="0.3822463768115942" />
@@ -65,6 +69,7 @@
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/edit_cart_dialog.xml" value="0.34270833333333334" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/fragment_login.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/fragment_register.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/layout/receipt_row.xml" value="0.33" />
         <entry key="..\:/Users/sudok/Documents/GitHub/PopNWatch/PopNWatch/app/src/main/res/menu/menu_select.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/sudok/source/repos/PopNWatch-main/PopNWatch/app/src/main/res/layout/activity_add_movie.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/sudok/source/repos/PopNWatch-main/PopNWatch/app/src/main/res/layout/activity_add_snack.xml" value="0.38697916666666665" />

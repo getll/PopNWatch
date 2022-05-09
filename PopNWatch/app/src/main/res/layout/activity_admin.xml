@@ -134,4 +134,16 @@
         app:layout_constraintTop_toTopOf="@+id/snackFloatingActionButton"
         app:srcCompat="@drawable/recipe" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/cartFloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#FFFF7F"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/selectedMovieFloatingActionButton"
+        app:layout_constraintStart_toStartOf="@+id/selectedMovieFloatingActionButton"
+        app:srcCompat="?attr/actionModeCopyDrawable" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

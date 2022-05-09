@@ -1,6 +1,8 @@
 package com.example.popnwatch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -69,7 +71,7 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate( R.layout.fragment_login, container, false );
         login = view.findViewById( R.id.loginButton );
-        email = view.findViewById( R.id.emailEditText );
+        email = view.findViewById( R.id.cardNumberEditText );
         password = view.findViewById( R.id.passwordEditText );
 
 
@@ -78,7 +80,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 userDB = new UserDB(view.getContext());
 
-                if(userDB.verifyCredentials(email.getText().toString().trim(), password.getText().toString().trim()) == true){
+                if(userDB.verifyCredentials(email.getText().toString().trim(), password.getText().toString().trim())){
                     Intent i = new Intent(view.getContext(), ClientActivity.class);
                     startActivity( i );
                     getActivity().overridePendingTransition( R.anim.slide_in_right,

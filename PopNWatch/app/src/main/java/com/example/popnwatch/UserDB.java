@@ -2,6 +2,7 @@ package com.example.popnwatch;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -76,6 +77,11 @@ public class UserDB extends SQLiteOpenHelper {
                 String userPassword = cursor.getString(5);
                 if(userEmail.equals( email) && userPassword.equals(password))
                 {
+                    SharedPreferences sharedPreferences = mContext.getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("userId", "1");
+                    editor.commit();
+
                     return true;
                 }
             }

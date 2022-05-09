@@ -50,7 +50,7 @@ public class AdminActivity extends AppCompatActivity {
     RecipesDb recipesDb;
     MovieDB movieDb;
 
-    FloatingActionButton mainFab, selectedMovieFab, movieFab, snackFab, recipeFab;
+    FloatingActionButton mainFab, selectedMovieFab, movieFab, snackFab, recipeFab, cartFab;
     Button add, search;
     RecyclerView recyclerView;
     boolean isVisible;
@@ -77,6 +77,7 @@ public class AdminActivity extends AppCompatActivity {
         movieFab = findViewById( R.id.movieFloatingActionButton );
         snackFab = findViewById( R.id.snackFloatingActionButton );
         recipeFab = findViewById( R.id.recipFloatingActionButton );
+        cartFab = findViewById( R.id.cartFloatingActionButton );
 
         add = findViewById( R.id.addButton );
         search = findViewById( R.id.searchButton );
@@ -99,6 +100,7 @@ public class AdminActivity extends AppCompatActivity {
                     movieFab.show();
                     snackFab.show();
                     recipeFab.show();
+                    cartFab.show();
                     isVisible = true;
                 }
                 else {
@@ -106,10 +108,20 @@ public class AdminActivity extends AppCompatActivity {
                     movieFab.hide();
                     snackFab.hide();
                     recipeFab.hide();
+                    cartFab.hide();
                     isVisible = false;
                 }
             }
         } );
+
+
+        cartFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AdminActivity.this, AdminPastCartsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         movieFab.setOnClickListener(new View.OnClickListener() {
             @Override
