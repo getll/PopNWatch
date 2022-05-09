@@ -8,6 +8,50 @@
     android:background="@drawable/background"
     >
 
+    <TextView
+        android:id="@+id/emailTextView3"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Time"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/movieTicketTimeTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/movieTicketTimeTextView" />
+
+    <TextView
+        android:id="@+id/emailTextView4"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Tickets"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/ticketQuantityTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ticketQuantityTextView" />
+
+    <TextView
+        android:id="@+id/emailTextView5"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Screen"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/movieTicketScreenTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/movieTicketScreenTextView" />
+
+    <TextView
+        android:id="@+id/emailTextView2"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Movie"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/movieTicketTitleTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/movieTicketTitleTextView" />
+
     <Button
         android:id="@+id/returnButton"
         android:layout_width="wrap_content"
@@ -31,61 +75,54 @@
     <TextView
         android:id="@+id/movieTicketTitleTextView"
         android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="30dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
         android:background="#8568B4E4"
-        android:text="No movie selected."
         android:gravity="center_vertical"
+        android:text="No movie selected."
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/emailTextView2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/movieTicketTimeTextView"
         android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="30dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="#8568B4E4"
         android:gravity="center_vertical"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/emailTextView3"
         app:layout_constraintTop_toBottomOf="@+id/movieTicketTitleTextView" />
 
     <TextView
         android:id="@+id/movieTicketScreenTextView"
         android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="30dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="#8568B4E4"
         android:gravity="center_vertical"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/emailTextView5"
         app:layout_constraintTop_toBottomOf="@+id/movieTicketTimeTextView" />
 
     <TextView
         android:id="@+id/ticketQuantityTextView"
         android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="30dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="#8568B4E4"
         android:gravity="center_vertical"
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/editMovieQuantityButton"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/emailTextView4"
         app:layout_constraintTop_toBottomOf="@+id/movieTicketScreenTextView" />
 
     <Button

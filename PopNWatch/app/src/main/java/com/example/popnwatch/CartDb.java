@@ -62,9 +62,9 @@ public class CartDb extends SQLiteOpenHelper {
         if (!checkExistingCart(userId)) {
             //creates empty cart if unpaid cart does not exist
             ContentValues contentValues = new ContentValues();
-            contentValues.putNull(CART_QUANTITY);
-            contentValues.putNull(CART_MOVIE_ID);
-            contentValues.putNull(CART_MOVIE_TITLE);
+            contentValues.put(CART_QUANTITY, 0);
+            contentValues.put(CART_MOVIE_ID, "");
+            contentValues.put(CART_MOVIE_TITLE, "");
             contentValues.put(CART_USER_ID, userId); //this from user
             contentValues.put(CART_IS_PAID, 0); //cart is unpaid
 
@@ -83,8 +83,8 @@ public class CartDb extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + Cart + " Where " + CART_IS_PAID + " = ? AND " + CART_USER_ID + " = ?", new String[] {"0", userId});
 
         if (cursor.getCount() == 0)
-            return false;
-        return true;
+            return false; //false if they do not have
+        return true; //true if they do have
     }
 
     //admin side
@@ -114,13 +114,10 @@ public class CartDb extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean checkoutCart(String id, String movieId, int quantity, String movieTitle) {
+    public boolean checkoutCart(String id) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(CART_MOVIE_ID, movieTitle);
-        contentValues.put(CART_MOVIE_TITLE, quantity);
-        contentValues.put(CART_QUANTITY, quantity);
         contentValues.put(CART_IS_PAID, 1);
 
         long result = sqLiteDatabase.update(Cart, contentValues, CART_ID + " = ? ", new String[] {id});

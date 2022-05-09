@@ -16,12 +16,12 @@
         android:ems="10"
         android:hint="Last Name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
+        app:layout_constraintBottom_toTopOf="@+id/cardNumberEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/emailEditText"
+        android:id="@+id/cardNumberEditText"
         android:layout_width="274dp"
         android:layout_height="47dp"
         android:layout_marginBottom="20dp"

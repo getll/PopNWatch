@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.124"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/cardNumberEditText" />
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/cardNumberEditText" />
 
     <ImageView
         android:id="@+id/logoImg"
@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logoImg" />
 
     <EditText
-        android:id="@+id/emailEditText"
+        android:id="@+id/cardNumberEditText"
         android:layout_width="281dp"
         android:layout_height="47dp"
         android:layout_marginTop="48dp"
@@ -112,7 +112,7 @@
         android:layout_marginTop="29dp"
         android:text="Email"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
+        app:layout_constraintBottom_toTopOf="@+id/cardNumberEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toStartOf="parent"

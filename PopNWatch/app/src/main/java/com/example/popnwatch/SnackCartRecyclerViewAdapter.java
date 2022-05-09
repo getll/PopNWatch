@@ -107,7 +107,7 @@ public class SnackCartRecyclerViewAdapter extends RecyclerView.Adapter<SnackCart
                                     if (cartDb.editSnackCart(cartSnack.getSnackCartId(), cartSnack.getId(), quantity, cartSnack.getCartId())) {
                                         Toast.makeText(context, "Edited snack quantity", Toast.LENGTH_SHORT).show();
 
-                                        ((CartActivity) context).getSnacks(userId);
+                                        ((CartActivity) context).getSnacks();
                                     }
                                     else {
                                         Toast.makeText(context, "Could not edit snack quantity", Toast.LENGTH_SHORT).show();
@@ -133,7 +133,7 @@ public class SnackCartRecyclerViewAdapter extends RecyclerView.Adapter<SnackCart
 
                     if (cartDb.deleteSnackCart(cartSnack.getSnackCartId())) {
                         Toast.makeText(context, "Deleted snack from cart", Toast.LENGTH_SHORT).show();
-                        ((CartActivity) context).getSnacks(userId);
+                        ((CartActivity) context).getSnacks();
                     }
                     else {
                         Toast.makeText(context, "Could not delete snack from cart", Toast.LENGTH_SHORT).show();

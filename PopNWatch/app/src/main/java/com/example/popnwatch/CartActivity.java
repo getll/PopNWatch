@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -75,7 +76,7 @@ public class CartActivity extends AppCompatActivity {
 
         //displaying the cart
         displayCart(userId);
-        getSnacks(userId);
+        getSnacks();
 
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +161,13 @@ public class CartActivity extends AppCompatActivity {
                 alertDialog.setPositiveButton( "Proceed to payment", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
 
+                                intent.putExtra("total", total);
+                                intent.putExtra("cartId", cartId);
+
+                                startActivity(intent);
+                                finish();
                             }
                         })
                         .setNegativeButton( "Cancel", new DialogInterface.OnClickListener() {
@@ -209,10 +216,10 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
-    public void getSnacks(String userId) {
+    public void getSnacks() {
         cartSnacks.clear();
 
-        Cursor cursor = cartDb.getSnackCart(userId);
+        Cursor cursor = cartDb.getSnackCart(cartId);
 
         while (cursor.moveToNext()){
             String snackCartId = cursor.getString(0);

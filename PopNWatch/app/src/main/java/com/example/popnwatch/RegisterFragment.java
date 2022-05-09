@@ -1,6 +1,5 @@
 package com.example.popnwatch;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -73,7 +72,7 @@ public class RegisterFragment extends Fragment {
 
         fname = view.findViewById( R.id.firstNameEditText );
         lname = view.findViewById( R.id.lastNameEditText );
-        email = view.findViewById( R.id.emailEditText );
+        email = view.findViewById( R.id.cardNumberEditText);
         bday = view.findViewById( R.id.birthdayEditText );
         password = view.findViewById( R.id.passwordEditText );
         register = view.findViewById( R.id.registerAccButton );

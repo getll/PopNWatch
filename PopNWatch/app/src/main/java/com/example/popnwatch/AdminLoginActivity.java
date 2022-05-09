@@ -23,7 +23,7 @@ public class AdminLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_admin_login );
-        email = findViewById(R.id.emailEditText);
+        email = findViewById(R.id.cardNumberEditText);
         password = findViewById(R.id.passwordEditText);
         login = findViewById(R.id.loginButton);
         register = findViewById(R.id.registerButton);
