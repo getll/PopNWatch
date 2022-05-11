@@ -163,7 +163,8 @@ public class AdminDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
-        if(db != null){
+
+        if (db != null){
             cursor = db.rawQuery(query, null);
         }
         return cursor;

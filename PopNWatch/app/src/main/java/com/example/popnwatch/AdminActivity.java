@@ -75,6 +75,7 @@ public class AdminActivity extends AppCompatActivity {
 
         add = findViewById( R.id.addButton );
         isVisible = false;
+        currentSelect = "";
 
         snackDB = new SnackDB( getApplicationContext() );
         recipesDb = new RecipesDb(getApplicationContext());

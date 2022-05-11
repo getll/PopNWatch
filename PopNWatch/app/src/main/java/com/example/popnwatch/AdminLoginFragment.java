@@ -66,8 +66,7 @@ public class AdminLoginFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.fragment_admin_login, container, false );
 
         email = view.findViewById(R.id.adminEmailEditText);
@@ -76,41 +75,44 @@ public class AdminLoginFragment extends Fragment {
 
         adminDB = new AdminDB(view.getContext());
         userDB = new UserDB(view.getContext());
-//        adminDB.addAdmin("admin@hotmail.com", "admin");
+
+        //creates default admin if there are no admin accounts
+        Cursor cursor = adminDB.retrieveAdmin();
+
+        if (cursor.getCount() == 0) {
+            adminDB.addAdmin("admin@hotmail.com", "admin");
+            Toast.makeText(view.getContext(), "Creating default admin account.", Toast.LENGTH_SHORT).show();
+        }
 
         login.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(verifyCredentials(view) == true){
-                    //set the user preferences here for id
-                    Toast.makeText(view.getContext(), "Log in sucessful",Toast.LENGTH_SHORT ).show();
+                if(verifyCredentials(view)){
+                    Toast.makeText(view.getContext(), "Log in successful",Toast.LENGTH_SHORT ).show();
                     Intent i = new Intent(view.getContext(), AdminActivity.class);
                     getActivity().overridePendingTransition( R.anim.slide_in_right,
                             R.anim.slide_out_left);
                     startActivity(i);
                 }
+                else {
+                    Toast.makeText(view.getContext(), "Admin log in failed.",Toast.LENGTH_SHORT ).show();
+                }
             }
         } );
-        // Inflate the layout for this fragment
 
         return view;
     }
 
     public boolean verifyCredentials(View view){
-
         Cursor cursor = adminDB.retrieveAdmin();
 
-        if(cursor.getCount() == 0){
-            Toast.makeText(view.getContext(),"Invalid Credentials", Toast.LENGTH_SHORT).show();
-        }else{
-            while(cursor.moveToNext()){
-                String adminEmail = cursor.getString(1);
-                String adminPassword = cursor.getString(2);
-                if(adminEmail.equals( email.getText().toString().toString().trim())
-                        && adminPassword.equals(password.getText().toString().trim()))
-                {
-                    return true;
-                }
+        while(cursor.moveToNext()) {
+            String adminEmail = cursor.getString(1);
+            String adminPassword = cursor.getString(2);
+            if (adminEmail.equals( email.getText().toString().trim())
+                    && adminPassword.equals(password.getText().toString().trim()))
+            {
+                return true;
             }
         }
         return false;
