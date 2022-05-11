@@ -58,7 +58,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#FFFF7F"
-        android:text="Add Recipe"
+        android:text="Update Recipe"
         android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"

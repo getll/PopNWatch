@@ -92,6 +92,7 @@
             android:id="@+id/morningRadioButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:checked="true"
             android:text="Morning"
             android:textColor="@color/white" />
 

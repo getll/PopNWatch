@@ -13,7 +13,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="60dp"
         android:backgroundTint="#FFFF7F"
-        android:text="Edit Showing"
+        android:text="Update Showing"
         android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

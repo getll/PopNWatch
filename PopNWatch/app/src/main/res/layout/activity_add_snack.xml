@@ -49,7 +49,7 @@
         android:layout_marginTop="20dp"
         android:background="#99FFFF7F"
         android:ems="10"
-        android:inputType="textEmailAddress"
+        android:inputType="number|numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgUrlEditText" />
