@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,32 +41,42 @@ public class AddMovieActivity extends AppCompatActivity {
         addShowingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String showtime;
-                int selectedRadio = radioGroup.getCheckedRadioButtonId();
+                if (validate()) {String showtime;
+                    int selectedRadio = radioGroup.getCheckedRadioButtonId();
 
-                switch (selectedRadio) {
-                    case (R.id.afternoonRadioButton):
-                        showtime = "afternoon";
-                        break;
-                    case (R.id.eveningRadioButton):
-                        showtime = "evening";
-                        break;
-                    default: //if morning and all other cases
-                        showtime = "morning";
-                        break;
+                    switch (selectedRadio) {
+                        case (R.id.afternoonRadioButton):
+                            showtime = "afternoon";
+                            break;
+                        case (R.id.eveningRadioButton):
+                            showtime = "evening";
+                            break;
+                        default: //if morning and all other cases. no validation needed since morning selected by default
+                            showtime = "morning";
+                            break;
+                    }
+
+                    int screen = Integer.parseInt(screenEditText.getText().toString());
+
+                    if (movieDB.addMovie(id, screen, showtime)) {
+                        Toast.makeText(AddMovieActivity.this, ("movie added: " + title), Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(AddMovieActivity.this, ("movie cannot be added: " + title), Toast.LENGTH_SHORT).show();
+                    }
+
+                    finish();
                 }
-
-                int screen = Integer.parseInt(screenEditText.getText().toString());
-
-                if (movieDB.addMovie(id, screen, showtime)) {
-                    Toast.makeText(AddMovieActivity.this, ("movie added: " + title), Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(AddMovieActivity.this, ("movie cannot be added: " + title), Toast.LENGTH_SHORT).show();
-                }
-
-                finish();
             }
         });
+    }
+
+    public boolean validate() {
+        if (screenEditText.getText().toString().isEmpty()) {
+            Toast.makeText(AddMovieActivity.this, "Please enter a screen", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }

@@ -3,6 +3,7 @@ package com.example.popnwatch;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,29 +39,18 @@ public class EditRecipeActivity extends AppCompatActivity {
         update.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (db.updateData(id, name.getText().toString().trim(), imgUrl.getText().toString().trim(),
+                if (validate()) {
+                    if (db.updateData(id, name.getText().toString().trim(), imgUrl.getText().toString().trim(),
                         desc.getText().toString().trim(), eta.getText().toString().trim(), genre.getText().toString().trim() )) {
-//                    Toast.makeText( EditRecipeActivity.this, "Recipe updated", Toast.LENGTH_SHORT ).show();
-                    Intent resultIntent = new Intent();
-                    setResult(RESULT_OK, resultIntent);
-                    finish();
+                        Toast.makeText( EditRecipeActivity.this, "Recipe updated", Toast.LENGTH_SHORT ).show();
+
+                        Intent resultIntent = new Intent();
+                        setResult(RESULT_OK, resultIntent);
+                        finish();
+                    }
                 }
             }
         });
-
-//        List<String> recipeNames = new ArrayList<>();
-//        Cursor cursor = db.retrieveData();
-//
-//        if(cursor.getCount() == 0){
-//            Toast.makeText(this,"No data", Toast.LENGTH_SHORT).show();
-//        }else{
-//            while(cursor.moveToNext()){
-//                recipeNames.add(cursor.getString( 1 ));
-//            }
-//        }
-//
-//        System.out.println(recipeNames);
-
     }
 
     public void getIntentExtra(){
@@ -84,5 +74,24 @@ public class EditRecipeActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this,"No data was passed", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public boolean validate() {
+        if (
+            name.getText().toString().isEmpty() ||
+            desc.getText().toString().isEmpty() ||
+            genre.getText().toString().isEmpty() ||
+            eta.getText().toString().isEmpty() ||
+            imgUrl.getText().toString().isEmpty()
+        ) {
+            Toast.makeText(EditRecipeActivity.this, "Do not leave fields empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (!Patterns.WEB_URL.matcher(imgUrl.getText().toString()).matches()) {
+            Toast.makeText(EditRecipeActivity.this, "Invalid url", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }

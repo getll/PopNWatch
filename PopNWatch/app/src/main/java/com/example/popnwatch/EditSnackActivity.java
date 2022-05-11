@@ -2,6 +2,7 @@ package com.example.popnwatch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,15 +34,18 @@ public class EditSnackActivity extends AppCompatActivity {
         update.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (db.updateData(id,
-                        name.getText().toString().trim(),
-                        imgUrl.getText().toString().trim(),
-                        Double.parseDouble(price.getText().toString().trim()),
-                        genre.getText().toString().trim() )) {
-                    Toast.makeText( EditSnackActivity.this, "Snack updated", Toast.LENGTH_SHORT ).show();
-                    Intent resultIntent = new Intent();
-                    setResult(RESULT_OK, resultIntent);
-                    finish();
+                if (validate()) {
+                    if (db.updateData(id,
+                            name.getText().toString().trim(),
+                            imgUrl.getText().toString().trim(),
+                            Double.parseDouble(price.getText().toString().trim()),
+                            genre.getText().toString().trim() )
+                    ) {
+                        Toast.makeText( EditSnackActivity.this, "Snack updated", Toast.LENGTH_SHORT ).show();
+                        Intent resultIntent = new Intent();
+                        setResult(RESULT_OK, resultIntent);
+                        finish();
+                    }
                 }
             }
         });
@@ -57,7 +61,6 @@ public class EditSnackActivity extends AppCompatActivity {
             snackPrice = getIntent().getStringExtra("price");
             snackGenre = getIntent().getStringExtra("genre");
 
-
             name.setText(snackName);
             imgUrl.setText(snackImg);;
             price.setText(snackPrice);;
@@ -67,5 +70,23 @@ public class EditSnackActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this,"No data was passed", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public boolean validate() {
+        if (
+            name.getText().toString().isEmpty() ||
+            price.getText().toString().isEmpty() ||
+            genre.getText().toString().isEmpty() ||
+            imgUrl.getText().toString().isEmpty()
+        ) {
+            Toast.makeText(EditSnackActivity.this, "Do not leave fields empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (!Patterns.WEB_URL.matcher(imgUrl.getText().toString()).matches()) {
+            Toast.makeText(EditSnackActivity.this, "Invalid url", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }

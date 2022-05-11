@@ -55,35 +55,44 @@ public class EditMovieActivity extends AppCompatActivity {
 
         movieDB = new MovieDB(getApplicationContext());
 
-
         editShowingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (validate()) {
+                    int newScreen = Integer.parseInt(screenEditText.getText().toString().trim());
+                    String newTime = "";
 
-                int newScreen = Integer.parseInt(screenEditText.getText().toString().trim());
-                String newTime = "";
+                    if (morningRadioButton.isChecked()) {
+                        newTime = "morning";
+                    }
+                    else if (afternoonRadioButton.isChecked()) {
+                        newTime = "afternoon";
+                    }
+                    else { //cannot unselect a radio button
+                        newTime = "evening";
+                    }
 
-                if (morningRadioButton.isChecked()) {
-                    newTime = "morning";
-                }
-                else if (afternoonRadioButton.isChecked()) {
-                    newTime = "afternoon";
-                }
-                else {
-                    newTime = "evening";
-                }
+                    if (movieDB.editMovie(id, apiId, newScreen, newTime)) {
+                        Toast.makeText(EditMovieActivity.this, "Movie edited", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(EditMovieActivity.this, "Movie could not be edited", Toast.LENGTH_SHORT).show();
+                    }
 
-                if (movieDB.editMovie(id, apiId, newScreen, newTime)) {
-                    Toast.makeText(EditMovieActivity.this, "Movie edited", Toast.LENGTH_SHORT).show();
+                    Intent resultIntent = new Intent();
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
                 }
-                else {
-                    Toast.makeText(EditMovieActivity.this, "Movie could not be edited", Toast.LENGTH_SHORT).show();
-                }
-
-                Intent resultIntent = new Intent();
-                setResult(RESULT_OK, resultIntent);
-                finish();
             }
         });
+    }
+
+    public boolean validate() {
+        if (screenEditText.getText().toString().isEmpty()) {
+            Toast.makeText(EditMovieActivity.this, "Please enter a screen", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }
