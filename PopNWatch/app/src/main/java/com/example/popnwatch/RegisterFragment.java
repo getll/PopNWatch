@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,9 +69,6 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.fragment_register, container, false );
 
-        EditText fname, lname, email, bday, password;
-        Button register;
-
         fname = view.findViewById( R.id.firstNameEditText );
         lname = view.findViewById( R.id.lastNameEditText );
         email = view.findViewById( R.id.cardNumberEditText);
@@ -78,24 +76,54 @@ public class RegisterFragment extends Fragment {
         password = view.findViewById( R.id.passwordEditText );
         register = view.findViewById( R.id.registerAccButton );
 
-
         register.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userDB = new UserDB( view.getContext() );
-                if(userDB.addUser( fname.getText().toString().trim(), lname.getText().toString().trim(), bday.getText().toString().trim(),
-                        email.getText().toString().trim(), password.getText().toString().trim())){
-                    LoginFragment loginFragment = new LoginFragment();
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainerView, loginFragment);
-                    transaction.commit();
-                    Toast.makeText(view.getContext(), "User registered Successfully!", Toast.LENGTH_SHORT).show();
-                }else
-                    Toast.makeText(view.getContext(), "Something went wrong:(", Toast.LENGTH_SHORT).show();
-            }
-        } );
 
+                if (validateInput()) {
+                    if (!userDB.checkEmailExists(email.getText().toString())) {
+                        if (userDB.addUser(
+                                fname.getText().toString().trim(),
+                                lname.getText().toString().trim(),
+                                bday.getText().toString().trim(),
+                                email.getText().toString().trim(),
+                                password.getText().toString().trim())) {
+
+                            LoginFragment loginFragment = new LoginFragment();
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragmentContainerView, loginFragment);
+                            transaction.commit();
+                            Toast.makeText(view.getContext(), "User registered Successfully!", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                            Toast.makeText(view.getContext(), "Something went wrong :(", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        Toast.makeText(view.getContext(), "Email already used", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         return view;
+    }
+
+    public boolean validateInput () {
+        if (
+            fname.getText().toString().isEmpty() ||
+            lname.getText().toString().isEmpty() ||
+            bday.getText().toString().isEmpty() ||
+            email.getText().toString().isEmpty() ||
+            password.getText().toString().isEmpty()
+        ) {
+            Toast.makeText(this.getContext(), "Do not leave fields empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (!Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
+            Toast.makeText(this.getContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }

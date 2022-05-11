@@ -60,7 +60,6 @@ public class UserDB extends SQLiteOpenHelper {
     }
 
     public boolean verifyCredentials(String email, String password){
-
         String query = "SELECT * FROM " + USER + " WHERE " + USER_EMAIL + "='" + email + "' AND " + USER_PASSWORD+"='"+password+"'";
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -69,9 +68,10 @@ public class UserDB extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         }
 
-        if(cursor.getCount() == 0){
+        if (cursor.getCount() == 0){
             Toast.makeText(mContext,"Either the user does not exist or password is incorrect", Toast.LENGTH_SHORT).show();
-        }else{
+        }
+        else {
             while(cursor.moveToNext()){
                 String userEmail = cursor.getString(4);
                 String userPassword = cursor.getString(5);
@@ -90,5 +90,17 @@ public class UserDB extends SQLiteOpenHelper {
         }
 
         return false;
+    }
+
+    public boolean checkEmailExists(String email) {
+        String query = "SELECT * FROM " + USER + " WHERE " + USER_EMAIL + "='" + email + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db.rawQuery(query, null);
+        }
+
+        return cursor.getCount() != 0;
     }
 }
