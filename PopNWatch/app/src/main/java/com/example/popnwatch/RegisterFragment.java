@@ -124,6 +124,39 @@ public class RegisterFragment extends Fragment {
             return false;
         }
 
+        String date = bday.getText().toString();
+        if (date.length() != 10) {
+            Toast.makeText(this.getContext(), "Invalid birthday", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        for (int i = 0; i < date.length(); i++) {
+            //sequence is
+            //dd/mm/yyyy, so index of / is 2 and 5
+            //0123456789
+            if (i == 2 || i == 5) {
+                if (date.charAt(i) != '/') {
+                    Toast.makeText(this.getContext(), "Invalid birthday", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+            else {
+                if (!Character.isDigit(date.charAt(i))) {
+                    Toast.makeText(this.getContext(), "Invalid birthday", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+        }
+
+        int month = Integer.parseInt(date.substring(3, 5));
+
+        if (month > 12) {
+            Toast.makeText(this.getContext(), "Invalid birthday", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        int day = Integer.parseInt(date.substring(0, 2));
+
         return true;
     }
 }

@@ -53,7 +53,7 @@
         android:layout_marginBottom="36dp"
         android:background="#99FFFF7F"
         android:ems="10"
-        android:hint="Date of birth"
+        android:hint="Date of birth (dd/mm/yyyy)"
         android:inputType="date"
         app:layout_constraintBottom_toTopOf="@+id/registerAccButton"
         app:layout_constraintEnd_toEndOf="parent"
