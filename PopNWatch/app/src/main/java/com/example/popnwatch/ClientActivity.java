@@ -65,11 +65,8 @@ public class ClientActivity extends AppCompatActivity {
 
         getMovieData();
 
-
         snackAdapter = new ClientSnackRecyclerViewAdapter(ids, names,imgs, price, genre, ClientActivity.this);
         recipeAdapter = new ClientRecipeRecyclerViewAdapter(recipeNames, recipeImgs, recipeDesc, recipeEta, recipeGenre , this);
-
-
     }
 
     @Override
@@ -92,7 +89,6 @@ public class ClientActivity extends AppCompatActivity {
                 break;
 
             case R.id.selectPage:
-                Toast.makeText(this, "Select is selected", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.Movies:
@@ -122,6 +118,7 @@ public class ClientActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(  R.anim.slide_in_right,
                         R.anim.slide_out_left);
+                Toast.makeText(this, "Showing cart", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.Map:

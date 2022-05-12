@@ -46,6 +46,7 @@ public class CartActivity extends AppCompatActivity {
 
     int ticketQuantity = 0;
     String ticketTitle = "none";
+    String selectedMovieId = "-1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,13 +89,37 @@ public class CartActivity extends AppCompatActivity {
         editMovieQuantityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EditText quantityInput = new EditText(CartActivity.this);
+                quantityInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(CartActivity.this);
-                alertDialog.setView(R.layout.add_to_cart_dialog)
+                alertDialog.setView(quantityInput)
                         .setTitle( "Edit Number of Tickets" )
                         .setPositiveButton( "Edit", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                
+                                String quantityStr = quantityInput.getText().toString();
+                                int quantity = 1;
+
+                                if (!quantityStr.isEmpty() || Integer.parseInt(quantityStr) > 0) {
+                                    quantity = Integer.parseInt(quantityStr);
+                                }
+
+                                Cursor cartCursor = cartDb.getCart(userId);
+                                String cartId = "";
+                                if (cartCursor.moveToNext()) {
+                                    cartId = cartCursor.getString(0);
+                                }
+
+                                //edit cart
+                                if (cartDb.editCartQuantity(cartId, quantity) && !selectedMovieId.isEmpty()) {
+                                    Toast.makeText(CartActivity.this, "Edited ticket quantity", Toast.LENGTH_SHORT).show();
+
+                                    displayCart(userId);
+                                }
+                                else {
+                                    Toast.makeText(CartActivity.this, "Could not edit ticket quantity", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         } )
                         .setNegativeButton( "Cancel", new DialogInterface.OnClickListener() {
@@ -105,88 +130,87 @@ public class CartActivity extends AppCompatActivity {
                         } );
                 AlertDialog dialog = alertDialog.create();
                 dialog.show();
-
-//                EditText qtyEditText = findViewById(R.id.qtyEditText);
-//                qtyEditText.setText("1");
             }
         });
 
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView summary = new TextView(CartActivity.this);
-                summary.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-                summary.setSingleLine(false);
-                summary.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                if (!selectedMovieId.isEmpty()) {
+                    TextView summary = new TextView(CartActivity.this);
+                    summary.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                    summary.setSingleLine(false);
+                    summary.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-                summary.setTextAppearance(CartActivity.this, R.style.font);
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder( CartActivity.this );
-                alertDialog.setView(summary).setTitle( "Summary" );
+                    summary.setTextAppearance(CartActivity.this, R.style.font);
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder( CartActivity.this );
+                    alertDialog.setView(summary).setTitle( "Summary" );
 
-                double ticketPrice = 15.99;
-                double totalSnackCartPrice = 0;
-                double totalTicketPrice = ticketPrice * ticketQuantity;
+                    double ticketPrice = 15.99;
+                    double totalSnackCartPrice = 0;
+                    double totalTicketPrice = ticketPrice * ticketQuantity;
 
-                String formattedReceipt = "\tTICKET\n";
-                formattedReceipt += String.format("\t%-4d x %s : %s\n", ticketQuantity, "Tickets for", ticketTitle);
-                formattedReceipt += String.format("\t%-4d x %-20.2f %10.2f\n\n", ticketQuantity, ticketPrice, totalTicketPrice);
+                    String formattedReceipt = "\tTICKET\n";
+                    formattedReceipt += String.format("\t%-4d x %s : %s\n", ticketQuantity, "Tickets for", ticketTitle);
+                    formattedReceipt += String.format("\t%-4d x %-20.2f %10.2f\n\n", ticketQuantity, ticketPrice, totalTicketPrice);
 
-                if (!cartSnacks.isEmpty()) {
-                    formattedReceipt += "\tSNACKS\n";
+                    if (!cartSnacks.isEmpty()) {
+                        formattedReceipt += "\tSNACKS\n";
+                    }
+
+                    for (CartSnack cartSnack : cartSnacks) {
+                        int snackQuantity = cartSnack.getQuantity();
+                        String snackName = cartSnack.getName();
+                        double snackPrice = cartSnack.getPrice();
+                        double totalSnackPrice = snackQuantity * snackPrice;
+
+                        formattedReceipt += String.format("\t%-4d x %s\n", snackQuantity, snackName);
+                        formattedReceipt += String.format("\t%-4d x %-20.2f %10.2f\n\n", snackQuantity, snackPrice, totalSnackPrice);
+
+                        totalSnackCartPrice += totalSnackPrice;
+                    }
+
+                    double subtotal = totalTicketPrice + totalSnackCartPrice;
+                    double qst = 0.09975 * subtotal;
+                    double gst = 0.05 * subtotal;
+                    double total = subtotal + qst + gst;
+                    formattedReceipt += String.format("\t%-27s %10.2f\n", "Subtotal", subtotal);
+                    formattedReceipt += String.format("\t%-27s %10.2f\n", "QST", qst);
+                    formattedReceipt += String.format("\t%-27s %10.2f\n", "GST", gst);
+                    formattedReceipt += String.format("\t%-27s %10.2f", "Total", total);
+
+                    summary.setText(formattedReceipt);
+
+                    alertDialog.setPositiveButton( "Proceed to payment", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
+
+                            intent.putExtra("total", total);
+                            intent.putExtra("cartId", cartId);
+
+                            startActivity(intent);
+                            finish();
+                        }
+                    })
+                            .setNegativeButton( "Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            } );
+                    AlertDialog dialog = alertDialog.create();
+                    dialog.show();
                 }
-
-                for (CartSnack cartSnack : cartSnacks) {
-                    int snackQuantity = cartSnack.getQuantity();
-                    String snackName = cartSnack.getName();
-                    double snackPrice = cartSnack.getPrice();
-                    double totalSnackPrice = snackQuantity * snackPrice;
-
-                    formattedReceipt += String.format("\t%-4d x %s\n", snackQuantity, snackName);
-                    formattedReceipt += String.format("\t%-4d x %-20.2f %10.2f\n\n", snackQuantity, snackPrice, totalSnackPrice);
-
-                    totalSnackCartPrice += totalSnackPrice;
+                else {
+                    Toast.makeText(CartActivity.this, "Please select a movie to watch", Toast.LENGTH_SHORT).show();
                 }
-
-                double subtotal = totalTicketPrice + totalSnackCartPrice;
-                double qst = 0.09975 * subtotal;
-                double gst = 0.05 * subtotal;
-                double total = subtotal + qst + gst;
-                formattedReceipt += String.format("\t%-27s %10.2f\n", "Subtotal", subtotal);
-                formattedReceipt += String.format("\t%-27s %10.2f\n", "QST", qst);
-                formattedReceipt += String.format("\t%-27s %10.2f\n", "GST", gst);
-                formattedReceipt += String.format("\t%-27s %10.2f", "Total", total);
-
-                summary.setText(formattedReceipt);
-
-                alertDialog.setPositiveButton( "Proceed to payment", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
-
-                                intent.putExtra("total", total);
-                                intent.putExtra("cartId", cartId);
-
-                                startActivity(intent);
-                                finish();
-                            }
-                        })
-                        .setNegativeButton( "Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        } );
-                AlertDialog dialog = alertDialog.create();
-                dialog.show();
-
             }
         });
     }
 
     private void displayCart(String userId) {
         Cursor cartCursor = cartDb.getCart(userId);
-
-        String selectedMovieId = "0";
 
         if (cartCursor.moveToNext()) { //only if there is a movie selected
             cartId = cartCursor.getString(0);
@@ -237,44 +261,4 @@ public class CartActivity extends AppCompatActivity {
         //update the recyclerview
         snackCartRecyclerViewAdapter.notifyDataSetChanged();
     }
-
-//    class GetMovie extends AsyncTask<Void, Void, Void> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            try {
-//                Retrofit retrofit = new Retrofit.Builder()
-//                        .baseUrl(MovieApi.BASE_URL)
-//                        .addConverterFactory(GsonConverterFactory.create())
-//                        .build();
-//                MovieApi api = retrofit.create(MovieApi.class);
-//
-//                Call<NewMovieData> call = api.getNewMovies();
-//
-//                Response<NewMovieData> response = call.execute();
-//                movieData = response.body().getItems();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void unused) {
-//            super.onPostExecute(unused);
-//
-//            //getting the user id
-//            SharedPreferences sharedPreferences = getSharedPreferences("MY_APP_PREFERENCES", Context.MODE_PRIVATE);
-//            String userId = sharedPreferences.getString("userId", "error");
-//
-//            //displaying the cart
-//            displayCart(userId);
-//        }
-//    }
 }

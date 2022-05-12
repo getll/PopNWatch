@@ -71,7 +71,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     cartId = cartCursor.getString(0);
                 }
 
-                //edit cart, not too sure if edit works. yes it does.
+                //edit cart
                 if (cartDb.editCart(cartId, movieId, title, quantity, false)) {
                     finish();
                 }

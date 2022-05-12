@@ -92,7 +92,6 @@ public class CartDb extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + Cart +
-//                " INNER JOIN " + Snack_Cart + " on " + Cart + "." + CART_ID + " = " + Snack_Cart + "." + SNACK_CART_CART_ID +
                 " Where " + CART_IS_PAID + " = ?", new String[] {"1"});
 
         return cursor;
@@ -102,7 +101,6 @@ public class CartDb extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + Cart +
-//                " INNER JOIN " + Snack_Cart + " on " + Cart + "." + CART_ID + " = " + Snack_Cart + "." + SNACK_CART_CART_ID +
                 " Where " + CART_IS_PAID + " = ? AND " + CART_USER_ID + " = ?", new String[] {"1", userId});
 
         return cursor;
@@ -116,6 +114,20 @@ public class CartDb extends SQLiteOpenHelper {
         contentValues.put(CART_MOVIE_TITLE, movieTitle);
         contentValues.put(CART_QUANTITY, quantity);
         contentValues.put(CART_IS_PAID, (isPaid) ? 1 : 0);
+
+        long result = sqLiteDatabase.update(Cart, contentValues, CART_ID + " = ? ", new String[] {id});
+
+        if (result == 1)
+            return true;
+
+        return false;
+    }
+
+    public boolean editCartQuantity(String id, int quantity) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CART_QUANTITY, quantity);
 
         long result = sqLiteDatabase.update(Cart, contentValues, CART_ID + " = ? ", new String[] {id});
 
