@@ -20,7 +20,6 @@ public class UserDB extends SQLiteOpenHelper {
     private static final String USER_ID ="user_id";
     private static final String USER_FIRSTNAME="firstName";
     private static final String USER_LASTNAME="lastName";
-    private static final String USER_BIRTHDAY="birthday";
     private static final String USER_EMAIL="email";
     private static final String USER_PASSWORD="password";
 
@@ -44,14 +43,13 @@ public class UserDB extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean addUser(String firstName, String lastName, String birthday, String email, String password) {
+    public boolean addUser(String firstName, String lastName, String email, String password) {
         SQLiteDatabase database = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_FIRSTNAME, firstName);
         contentValues.put(USER_LASTNAME, lastName);
 
         //birthday in yyyy-mm-dd
-        contentValues.put(USER_BIRTHDAY, birthday);
         contentValues.put(USER_EMAIL, email);
         contentValues.put(USER_PASSWORD, password);
         database.insert("User",null,contentValues);

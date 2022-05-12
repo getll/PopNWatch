@@ -11,75 +11,62 @@
         android:id="@+id/lastNameEditText"
         android:layout_width="274dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:background="#99FFFF7F"
         android:ems="10"
         android:hint="Last Name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/cardNumberEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameEditText" />
 
     <EditText
         android:id="@+id/cardNumberEditText"
         android:layout_width="274dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:background="#99FFFF7F"
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameEditText" />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="274dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:background="#99FFFF7F"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/birthdayEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/birthdayEditText"
-        android:layout_width="274dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="36dp"
-        android:background="#99FFFF7F"
-        android:ems="10"
-        android:hint="Date of birth (dd/mm/yyyy)"
-        android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/registerAccButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardNumberEditText" />
 
     <EditText
         android:id="@+id/firstNameEditText"
         android:layout_width="274dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="100dp"
         android:background="#99FFFF7F"
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/lastNameEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/registerAccButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginTop="36dp"
         android:background="#FFFF7F"
         android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 </androidx.constraintlayout.widget.ConstraintLayout>
