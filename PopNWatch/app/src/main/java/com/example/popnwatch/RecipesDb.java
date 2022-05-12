@@ -58,9 +58,11 @@ public class RecipesDb extends SQLiteOpenHelper {
 
         return true;
     }
+
     public void deleteData(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete( Recipes, "name=?", new String[]{name} );
+
         if (result == -1) {
             Toast.makeText( context, "Failed", Toast.LENGTH_SHORT ).show();
         } else {
@@ -81,9 +83,6 @@ public class RecipesDb extends SQLiteOpenHelper {
 
         long result = sqLiteDatabase.update(Recipes, cv, "recipe_id = ? ", new String[] {id});
         return (result != 0);
-//
-//        String query = "update Recipes set description='" + desc + "' where name='" + name + "'";
-//        sqLiteDatabase.execSQL(query);
     }
 
     public Cursor retrieveData(){

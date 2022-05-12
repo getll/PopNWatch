@@ -115,6 +115,8 @@ public class AdminActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AdminActivity.this, AdminPastCartsActivity.class);
                 startActivity(intent);
+
+                Toast.makeText(AdminActivity.this, "Showing receipts" + currentSelect, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -123,11 +125,11 @@ public class AdminActivity extends AppCompatActivity {
             public void onClick(View view) {
                 currentSelect = "Movie";
                 changeButtonVisibility();
-                Toast.makeText(AdminActivity.this, "Good " + currentSelect, Toast.LENGTH_SHORT).show();
 
                 movieRecyclerAdapter = new MovieRecyclerAdapter(movieData, AdminActivity.this);
                 recyclerView.setAdapter(movieRecyclerAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
+                Toast.makeText(AdminActivity.this, "Showing movies to show", Toast.LENGTH_SHORT).show();
             }
         } );
 
@@ -140,6 +142,7 @@ public class AdminActivity extends AppCompatActivity {
                 selectedMovieRecyclerViewAdapter = new SelectedMovieRecyclerViewAdapter(movieData, selectedMovies, AdminActivity.this);
                 recyclerView.setAdapter(selectedMovieRecyclerViewAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
+                Toast.makeText(AdminActivity.this, "Showing added movies", Toast.LENGTH_SHORT).show();
 
                 getSelectedMovies();
             }
@@ -152,13 +155,8 @@ public class AdminActivity extends AppCompatActivity {
                 changeButtonVisibility();
                 recyclerView.setAdapter(snackAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
+                Toast.makeText(AdminActivity.this, "Showing snacks", Toast.LENGTH_SHORT).show();
                 getSnacks();
-
-//                Activity activity = AdminActivity.this;
-//                Intent i = new Intent(AdminActivity.this, AdminActivity.class);
-//                activity.startActivityForResult(i, 1 );
-
-                Toast.makeText(AdminActivity.this, "Good " + currentSelect, Toast.LENGTH_SHORT).show();
             }
         } );
 
@@ -169,42 +167,30 @@ public class AdminActivity extends AppCompatActivity {
                 changeButtonVisibility();
                 recyclerView.setAdapter(recipeAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this));
+                Toast.makeText(AdminActivity.this, "Showing recipes", Toast.LENGTH_SHORT).show();
                 getRecipes();
-                Toast.makeText(AdminActivity.this, "Good " + currentSelect, Toast.LENGTH_SHORT).show();
             }
         } );
 
         add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                //This allows user to select which database they would want to mess with
-               switch(currentSelect){
-                   case "Movie":
-                       //Test
-                       Toast.makeText(AdminActivity.this, "Selected " + currentSelect, Toast.LENGTH_SHORT).show();
-                       break;
-
-                   case "Snack":
-                       Intent i = new Intent(AdminActivity.this, AddSnackActivity.class);
-                       startActivityForResult(i, 1);
-                       Toast.makeText(AdminActivity.this, "Seleccted " + currentSelect, Toast.LENGTH_SHORT).show();
-                       break;
-
-                   case "Recipe":
-                       Intent r = new Intent(AdminActivity.this, AddRecipeActivity.class);
-                       startActivityForResult(r, 2);
-                       Toast.makeText(AdminActivity.this, "Selected " + currentSelect, Toast.LENGTH_SHORT).show();
-
-                       break;
-                   default:
-                       Toast.makeText(AdminActivity.this, "Please select what will be viewed" + currentSelect, Toast.LENGTH_SHORT).show();
+                //This allows user to select which database they would want to mess with
+                switch (currentSelect){
+                    case "Snack":
+                        Intent i = new Intent(AdminActivity.this, AddSnackActivity.class);
+                        startActivityForResult(i, 1);
                         break;
-               }
+                    case "Recipe":
+                        Intent r = new Intent(AdminActivity.this, AddRecipeActivity.class);
+                        startActivityForResult(r, 2);
+                        break;
+                    default:
+                        Toast.makeText(AdminActivity.this, "Please select what will be viewed", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
-        } );
-
-
+        });
     }
 
     private void getMovieData() {
@@ -273,6 +259,8 @@ public class AdminActivity extends AppCompatActivity {
         snackAdapter.notifyDataSetChanged();
     }
 
+    //cannot add a movie from the api page
+    // or the selected movies (selected movies made from api)
     public void changeButtonVisibility() {
         if (currentSelect.equals("Movie") || currentSelect.equals("SelectedMovie")) {
             add.setClickable(false);
@@ -280,7 +268,6 @@ public class AdminActivity extends AppCompatActivity {
         else {
             add.setClickable(true);
         }
-
     }
     public void getRecipes(){
         recipeNames.clear();
@@ -307,6 +294,7 @@ public class AdminActivity extends AppCompatActivity {
         recipeAdapter.notifyDataSetChanged();
     }
 
+    //to update the right recyclerview once an item gets added, either snack, recipe or movie
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

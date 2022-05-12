@@ -48,6 +48,10 @@ public class SelectedMovieRecyclerViewAdapter extends RecyclerView.Adapter<Selec
             }
         }
 
+        if (movieDataDetail.getTitle().isEmpty()) { //if the movie is not getting fetched
+            movieDataDetail.setTitle("Movie currently unavailable");
+        }
+
         //setting image using url via glide
         Glide.with(context).asBitmap().load(movieDataDetail.getImage()).into(holder.movieImageView);
 
